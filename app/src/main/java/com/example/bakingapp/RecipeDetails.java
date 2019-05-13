@@ -1,5 +1,6 @@
 package com.example.bakingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,12 +16,11 @@ import com.example.bakingapp.Pojos.Recipe;
 import com.example.bakingapp.Pojos.Step;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecipeDetails extends AppCompatActivity {
 
-    //ArrayList<Recipe> mRecipeArrayList;
-    Recipe mRecipe = null;
+    ArrayList<Recipe> mRecipeArrayList;
+//    Recipe mRecipe = null;
     private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
 
     StepService mStepService;
@@ -38,10 +38,8 @@ public class RecipeDetails extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_details);
 
         // Receiving intent from MainActivity
-        android.os.Bundle data = getIntent().getExtras();
-        mRecipe = data.getParcelable("recipe");
-        stepsList = (ArrayList<Step>) mRecipe.getSteps();
-        populateUI();
+        Intent recipeIntent = getIntent();
+        mRecipeArrayList = recipeIntent.getParcelableArrayListExtra("RECIPE_KEY");
 
         // Set up Steps Recycler View
 
@@ -85,10 +83,10 @@ public class RecipeDetails extends AppCompatActivity {
 
     private void populateUI() {
 
-        TextView recipeIngredientsView = findViewById(R.id.recipe_name_tv);
-        List ingredients = mRecipe.getIngredients();
-        String ingredientsString = ingredients.toString();
-        recipeIngredientsView.setText(ingredientsString);
+//        TextView recipeIngredientsView = findViewById(R.id.recipe_name_tv);
+//        List ingredients = mRecipe.getIngredients();
+//        String ingredientsString = ingredients.toString();
+//        recipeIngredientsView.setText(ingredientsString);
 
     }
 
