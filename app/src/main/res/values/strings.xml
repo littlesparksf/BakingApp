@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Baking App</string>
+    <string name="recipe_list_header">Recipes</string>
+    <string name="error_message">No recipes found.</string>
+    <string name="recipe_details_title">Recipe Details</string>
+
+    <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
+
+    <string name="settings_order_by_label">Order By</string>
+
+    <string name="settings_order_by_key" translatable="false">order_by</string>
+
+    <string name="settings_order_by_default" translatable="false">Default Setting Here</string>
+
+</resources>
