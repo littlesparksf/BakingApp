@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Recipe implements Parcelable {
     protected Recipe(Parcel in) {
@@ -35,9 +34,9 @@ public class Recipe implements Parcelable {
 
     private String name;
 
-    private List<Ingredient> ingredients;
+    private ArrayList<Ingredient> ingredients;
 
-    private List<Step> steps;
+    private ArrayList<Step> steps;
 
     private int servings;
 
@@ -50,7 +49,7 @@ public class Recipe implements Parcelable {
 
     /** Constructor */
 
-    public Recipe(int id, String name, List<Ingredient> ingredients, List<Step> steps, int servings, String image){
+    public Recipe(int id, String name, ArrayList<Ingredient> ingredients, ArrayList<Step> steps, int servings, String image){
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;
@@ -67,11 +66,11 @@ public class Recipe implements Parcelable {
     public String getName() {return name;}
     public void setName (String name) {this.name = name;}
 
-    public List<Ingredient> getIngredients() {return ingredients;}
-    public void setIngredients (List<Ingredient> ingredients) {this.ingredients = ingredients;}
+    public ArrayList<Ingredient> getIngredients() {return ingredients;}
+    public void setIngredients (ArrayList<Ingredient> ingredients) {this.ingredients = ingredients;}
 
-    public List<Step> getSteps() {return steps;}
-    public void setSteps (List<Step> steps) {this.steps = steps;}
+    public ArrayList<Step> getSteps() {return steps;}
+    public void setSteps (ArrayList<Step> steps) {this.steps = steps;}
 
     public int getServings() {return servings;}
     public void setServings(int servings){this.servings = servings;}

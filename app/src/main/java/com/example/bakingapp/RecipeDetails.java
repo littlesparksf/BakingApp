@@ -1,6 +1,5 @@
 package com.example.bakingapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 public class RecipeDetails extends AppCompatActivity {
 
     ArrayList<Recipe> mRecipeArrayList;
-//    Recipe mRecipe = null;
+    Recipe mRecipe = null;
     private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
 
     StepService mStepService;
@@ -38,8 +37,11 @@ public class RecipeDetails extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_details);
 
         // Receiving intent from MainActivity
-        Intent recipeIntent = getIntent();
-        mRecipeArrayList = recipeIntent.getParcelableArrayListExtra("RECIPE_KEY");
+//        Intent recipeIntent = getIntent();
+//        mRecipeArrayList = recipeIntent.getParcelableArrayListExtra("RECIPE_KEY");
+
+        android.os.Bundle data = getIntent().getExtras();
+        mRecipe = data.getParcelable("recipe");
 
         // Set up Steps Recycler View
 
