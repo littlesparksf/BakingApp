@@ -3,9 +3,39 @@ package com.example.bakingapp.Pojos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Step implements Parcelable {
 
-    protected Step(Parcel in) {
+    @SerializedName("id")
+    private int id;
+
+    @SerializedName("shortDescription")
+    private String shortDescription;
+
+    @SerializedName("description")
+    private String description;
+
+    @SerializedName("videoUrl")
+    private String videoUrl;
+
+    @SerializedName("thumbnailUrl")
+    private String thumbnailUrl;
+
+    /** No args constructor for use in serialization */
+    public Step(){
+    }
+
+    /** Constructor */
+    public Step(int id, String shortDescription, String description, String videoUrl, String thumbnailUrl){
+        this.id = id;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.videoUrl = videoUrl;
+        this.thumbnailUrl = thumbnailUrl;
+    }
+
+    private Step(Parcel in) {
         this.id = in.readInt();
         this.shortDescription = in.readString();
         this.description = in.readString();
@@ -24,26 +54,6 @@ public class Step implements Parcelable {
             return new Step[size];
         }
     };
-
-    private int id;
-    private String shortDescription;
-    private String description;
-    private String videoUrl;
-    private String thumbnailUrl;
-
-    /** No args constructor for use in serialization */
-    public Step(){
-    }
-
-    /** Constructor */
-
-    public Step(int id, String shortDescription, String description, String videoUrl, String thumbnailUrl){
-        this.id = id;
-        this.shortDescription = shortDescription;
-        this.description = description;
-        this.videoUrl = videoUrl;
-        this.thumbnailUrl = thumbnailUrl;
-    }
 
     /** Getters and Setters here */
 

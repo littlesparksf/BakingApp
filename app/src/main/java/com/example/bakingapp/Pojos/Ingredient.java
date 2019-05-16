@@ -3,7 +3,30 @@ package com.example.bakingapp.Pojos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Ingredient implements Parcelable {
+
+    @SerializedName("quantity")
+    private double quantity;
+
+    @SerializedName("measure")
+    private String measure;
+
+    @SerializedName("ingredient")
+    private String ingredient;
+
+    /** No args constructor for use in serialization */
+    public Ingredient() {
+    }
+
+    /** Constructor */
+    public Ingredient(double quantity, String measure, String ingredient){
+        this.quantity = quantity;
+        this.measure = measure;
+        this.ingredient = ingredient;
+    }
+
     protected Ingredient(Parcel in) {
         this.quantity = in.readDouble();
         this.measure = in.readString();
@@ -21,22 +44,6 @@ public class Ingredient implements Parcelable {
             return new Ingredient[size];
         }
     };
-
-    private double quantity;
-    private String measure;
-    private String ingredient;
-
-    /** No args constructor for use in serialization */
-    public Ingredient() {
-    }
-
-    /** Constructor */
-
-    public Ingredient(double quantity, String measure, String ingredient){
-        this.quantity = quantity;
-        this.measure = measure;
-        this.ingredient = ingredient;
-    }
 
     /** Getters and Setters here */
 
@@ -56,6 +63,9 @@ public class Ingredient implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(quantity);
+        dest.writeString(measure);
+        dest.writeString(ingredient);
     }
 }
 

@@ -88,28 +88,30 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             recipeText = itemView.findViewById(R.id.recipe_text);
             recipeImage = itemView.findViewById(R.id.recipe_image);
 
+            // Get a reference to the view within this item
             itemView.setOnClickListener(this);
         }
+
+        public void onClick(View v) {
+            int recipePosition = getAdapterPosition();
+            Recipe recipe = mRecipeList.get(recipePosition);
+
+            Intent intent = new Intent(mContext, RecipeDetails.class);
+            ArrayList<Recipe> recipeArrayList = new ArrayList<>();
+            recipeArrayList.add(recipe);
+            intent.putParcelableArrayListExtra("RECIPE _KEY", recipeArrayList);
+            mContext.startActivity(intent);
+        }
+
 
 //        @Override
 //        public void onClick(View v) {
 //            int recipePosition = getAdapterPosition();
 //            Recipe recipe = mRecipeList.get(recipePosition);
-//            Intent intent = new Intent(mContext, RecipeDetails.class);
-//            ArrayList<Recipe> recipeArrayList = new ArrayList<>();
-//            recipeArrayList.add(recipe);
-//            intent.putParcelableArrayListExtra("RECIPE _KEY", recipeArrayList);
-//            mContext.startActivity(intent);
+//
+//            Intent intent = new Intent(recipeName.getContext(), RecipeDetails.class);
+//            intent.putExtra ("recipe", new Recipe(recipe.getId(), recipe.getName(), recipe.getIngredients(), recipe.getSteps(), recipe.getServings(), recipe.getImage()));
+//            recipeName.getContext().startActivity(intent);
 //        }
-
-        @Override
-        public void onClick(View v) {
-            int recipePosition = getAdapterPosition();
-            Recipe recipe = mRecipeList.get(recipePosition);
-
-            Intent intent = new Intent(recipeName.getContext(), RecipeDetails.class);
-            intent.putExtra ("recipe", new Recipe(recipe.getId(), recipe.getName(), recipe.getIngredients(), recipe.getSteps(), recipe.getServings(), recipe.getImage()));
-            recipeName.getContext().startActivity(intent);
-        }
     }
 }
