@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.bakingapp.Adapters.RecipeAdapter;
@@ -19,20 +18,17 @@ import java.util.ArrayList;
 
 public class RecipeDetails extends AppCompatActivity {
 
-    ArrayList<Recipe> mRecipeArrayList;
-    Recipe mRecipe;
-    private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
-
-    ArrayList<Step> stepsList;
-    String recipeName;
+    public ArrayList<Recipe> mRecipeArrayList;
+    public ArrayList<Step> stepsList;
 
     private String RECIPE_KEY;
+    private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
 
     // Steps recycler view variables
     private RecyclerView mStepsRecyclerView;
     private StepAdapter mStepsAdapter;
     private TextView mStepsEmptyView;
-    private ProgressBar mStepsLoadingIndicator;
+    //private ProgressBar mStepsLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +36,8 @@ public class RecipeDetails extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_details);
 
         // Get recipe data from MainActivity
-        if (savedInstanceState == null){
-            Intent recipeIntent = getIntent();
-            mRecipeArrayList = ((Intent) recipeIntent).getParcelableArrayListExtra("RECIPE_KEY");
-        }
+        Intent recipeIntent = getIntent();
+        mRecipeArrayList = ((Intent) recipeIntent).getParcelableArrayListExtra("RECIPE_KEY");
 
         // Set up Steps Recycler View
 
@@ -53,7 +47,7 @@ public class RecipeDetails extends AppCompatActivity {
         Log.v(LOG_TAG, "Reviews recycler view found.");
 
         mStepsEmptyView = findViewById(R.id.steps_empty_view);
-        mStepsLoadingIndicator = findViewById(R.id.steps_loading_indicator);
+        //mStepsLoadingIndicator = findViewById(R.id.steps_loading_indicator);
 
         LinearLayoutManager reviewsLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
         mStepsRecyclerView.setLayoutManager(reviewsLinearLayoutManager);
@@ -70,13 +64,13 @@ public class RecipeDetails extends AppCompatActivity {
     }
 
     private void populateUI() {
-        if (mRecipeArrayList != null) {
+//        if (mRecipeArrayList != null) {
             TextView recipeNameView = findViewById(R.id.recipe_name_tv);
             String name = mRecipeArrayList.get(0).getName();
             recipeNameView.setText(name);
-        } else {
-            showStepsErrorMessage();
-        }
+//        } else {
+//            showStepsErrorMessage();
+//        }
     }
 
     private void loadSteps() {

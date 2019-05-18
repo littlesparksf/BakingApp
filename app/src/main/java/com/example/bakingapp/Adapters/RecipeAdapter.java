@@ -103,7 +103,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             mContext.startActivity(intent);
         }
 
-
 //        @Override
 //        public void onClick(View v) {
 //            int recipePosition = getAdapterPosition();
