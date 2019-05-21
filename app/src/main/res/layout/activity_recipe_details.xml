@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/recipe_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/recipe_name_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceLarge" />
 
-        <ImageView
-            android:id="@+id/recipe_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/recipe_ingredients_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ingredients_list_title"
+        android:textAppearance="?android:textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/recipe_name_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceLarge"/>
+    <TextView
+        android:id="@+id/recipe_ingredients_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceSmall" />
 
+    <TextView
+        android:id="@+id/recipe_steps_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceSmall" />
+
+    <!-- Steps -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/steps_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 
     <!-- Empty view is only visible when the list has no items. -->
     <TextView
@@ -28,15 +48,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:text="@string/error_message"/>
+        android:text="@string/error_message"
+        android:textAppearance="?android:textAppearanceSmall" />
 
     <!-- Loading indicator for user feedback between queries to MovieDB -->
     <ProgressBar
         android:id="@+id/steps_loading_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
     />
 
-    </LinearLayout>
+</LinearLayout>

@@ -2,6 +2,7 @@ package com.example.bakingapp.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -96,21 +97,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             int recipePosition = getAdapterPosition();
             Recipe recipe = mRecipeList.get(recipePosition);
 
-            Intent intent = new Intent(mContext, RecipeDetails.class);
-            ArrayList<Recipe> recipeArrayList = new ArrayList<>();
-            recipeArrayList.add(recipe);
-            intent.putParcelableArrayListExtra("RECIPE _KEY", recipeArrayList);
+            Bundle b = new Bundle();
+            b.putString("name", recipe.getName());
+            b.putParcelableArrayList("ingredients", recipe.getIngredients());
+            b.putParcelableArrayList("steps", recipe.getSteps());
+
+            final Intent intent = new Intent(mContext, RecipeDetails.class);
+            intent.putExtras(b);
+
             mContext.startActivity(intent);
         }
-
-//        @Override
-//        public void onClick(View v) {
-//            int recipePosition = getAdapterPosition();
-//            Recipe recipe = mRecipeList.get(recipePosition);
-//
-//            Intent intent = new Intent(recipeName.getContext(), RecipeDetails.class);
-//            intent.putExtra ("recipe", new Recipe(recipe.getId(), recipe.getName(), recipe.getIngredients(), recipe.getSteps(), recipe.getServings(), recipe.getImage()));
-//            recipeName.getContext().startActivity(intent);
-//        }
     }
 }

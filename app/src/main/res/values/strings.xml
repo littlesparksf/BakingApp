@@ -3,6 +3,7 @@
     <string name="recipe_list_header">Recipes</string>
     <string name="error_message">No recipes found.</string>
     <string name="recipe_details_title">Recipe Details</string>
+    <string name="ingredients_list_title">Ingredients</string>
 
     <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
 

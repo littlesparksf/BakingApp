@@ -1,6 +1,5 @@
 package com.example.bakingapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.bakingapp.Adapters.RecipeAdapter;
 import com.example.bakingapp.Adapters.StepAdapter;
+import com.example.bakingapp.Pojos.Ingredient;
 import com.example.bakingapp.Pojos.Recipe;
 import com.example.bakingapp.Pojos.Step;
 
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class RecipeDetails extends AppCompatActivity {
 
+    public Recipe recipe;
     public ArrayList<Recipe> mRecipeArrayList;
     public ArrayList<Step> stepsList;
 
@@ -36,9 +37,8 @@ public class RecipeDetails extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_details);
 
         // Get recipe data from MainActivity
-        Intent recipeIntent = getIntent();
-        mRecipeArrayList = ((Intent) recipeIntent).getParcelableArrayListExtra("RECIPE_KEY");
-
+        //Intent recipeIntent = getIntent();
+        mRecipeArrayList = getIntent().getExtras().getParcelableArrayList("RECIPE_KEY");
         // Set up Steps Recycler View
 
         //  Get a reference to the RecyclerView
@@ -64,24 +64,34 @@ public class RecipeDetails extends AppCompatActivity {
     }
 
     private void populateUI() {
-//        if (mRecipeArrayList != null) {
-            TextView recipeNameView = findViewById(R.id.recipe_name_tv);
-            String name = mRecipeArrayList.get(0).getName();
-            recipeNameView.setText(name);
-//        } else {
-//            showStepsErrorMessage();
-//        }
+        TextView recipeNameView = findViewById(R.id.recipe_name_tv);
+        String name = getIntent().getStringExtra("name");
+        recipeNameView.setText(name);
+
+        TextView recipeIngredientsView = findViewById(R.id.recipe_ingredients_tv);
+        ArrayList<Ingredient> ingredientArrayList = getIntent().getParcelableArrayListExtra("ingredients");
+
+        for (int i=0; i<ingredientArrayList.size();i++) {
+            recipeIngredientsView.append(ingredientArrayList.get(i).getIngredient());
+            recipeIngredientsView.append("\n");
+        }
+
+        TextView recipeStepsView = findViewById(R.id.recipe_steps_tv);
+        ArrayList<Step> stepArrayList = getIntent().getParcelableArrayListExtra("steps");
+
+        for (int i=0; i<stepArrayList.size();i++) {
+            recipeStepsView.append(stepArrayList.get(i).getShortDescription());
+            recipeStepsView.append("\n");
+        }
     }
 
     private void loadSteps() {
         showStepsDataView();
         Log.v(LOG_TAG, "showStepsDataView called.");
 
-        if (stepsList != null) {
-            mStepsAdapter.setSteps(stepsList);
-        } else {
-            showStepsErrorMessage();
-        }
+        ArrayList<Step> stepArrayList = getIntent().getParcelableArrayListExtra("steps");
+        mStepsAdapter.setSteps(stepArrayList);
+        Log.v(LOG_TAG, "setSteps called.");
     }
 
     private void showStepsDataView() {
