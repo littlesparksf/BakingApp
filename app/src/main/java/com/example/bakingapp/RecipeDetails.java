@@ -38,7 +38,7 @@ public class RecipeDetails extends AppCompatActivity {
 
         // Get recipe data from MainActivity
         //Intent recipeIntent = getIntent();
-        mRecipeArrayList = getIntent().getExtras().getParcelableArrayList("RECIPE_KEY");
+        //mRecipeArrayList = getIntent().getExtras().getParcelableArrayList("RECIPE_KEY");
         // Set up Steps Recycler View
 
         //  Get a reference to the RecyclerView

@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mRecipesLoadingIndicator;
     Parcelable savedRecyclerLayoutState;
 
+    // For two-pane tablet layout
+    private boolean mTwoPane;
+    // Figure out logic for two panes in onCreate
+
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
 
@@ -42,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if ((findViewById(R.id.baking_main_linear_layout) !=null)){
+            mTwoPane=true;
+            // Set up two pane layout
+        }
 
         mRecipeService = new RecipeClient().mRecipeService;
         new FetchRecipesAsyncTask().execute();
