@@ -1,6 +1,6 @@
 package com.example.bakingapp;
 
-import com.example.bakingapp.Pojos.Step;
+import com.example.bakingapp.Model.Step;
 
 import java.util.List;
 

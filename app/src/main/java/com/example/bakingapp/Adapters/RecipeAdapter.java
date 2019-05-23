@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bakingapp.Pojos.Ingredient;
-import com.example.bakingapp.Pojos.Recipe;
-import com.example.bakingapp.Pojos.Step;
+import com.example.bakingapp.Model.Ingredient;
+import com.example.bakingapp.Model.Recipe;
+import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
 import com.example.bakingapp.RecipeDetails;
 

@@ -1,6 +1,6 @@
 package com.example.bakingapp;
 
-import com.example.bakingapp.Pojos.Recipe;
+import com.example.bakingapp.Model.Recipe;
 
 import java.util.ArrayList;
 

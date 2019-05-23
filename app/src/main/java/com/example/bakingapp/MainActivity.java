@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.bakingapp.Adapters.RecipeAdapter;
-import com.example.bakingapp.Pojos.Recipe;
+import com.example.bakingapp.Model.Recipe;
 
 import java.util.ArrayList;
 

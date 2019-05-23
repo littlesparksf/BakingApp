@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.example.bakingapp.Adapters.RecipeAdapter;
 import com.example.bakingapp.Adapters.StepAdapter;
-import com.example.bakingapp.Pojos.Ingredient;
-import com.example.bakingapp.Pojos.Recipe;
-import com.example.bakingapp.Pojos.Step;
+import com.example.bakingapp.Model.Ingredient;
+import com.example.bakingapp.Model.Recipe;
+import com.example.bakingapp.Model.Step;
 
 import java.util.ArrayList;
 
@@ -64,7 +64,8 @@ public class RecipeDetails extends AppCompatActivity {
     }
 
     private void populateUI() {
-        TextView recipeNameView = findViewById(R.id.recipe_name_tv);
+
+        TextView recipeNameView = findViewById(R.id.recipe_detail_name);
         String name = getIntent().getStringExtra("name");
         recipeNameView.setText(name);
 
@@ -75,21 +76,15 @@ public class RecipeDetails extends AppCompatActivity {
             recipeIngredientsView.append(ingredientArrayList.get(i).getIngredient());
             recipeIngredientsView.append("\n");
         }
-
-        TextView recipeStepsView = findViewById(R.id.recipe_steps_tv);
-        ArrayList<Step> stepArrayList = getIntent().getParcelableArrayListExtra("steps");
-
-        for (int i=0; i<stepArrayList.size();i++) {
-            recipeStepsView.append(stepArrayList.get(i).getShortDescription());
-            recipeStepsView.append("\n");
-        }
     }
 
     private void loadSteps() {
         showStepsDataView();
         Log.v(LOG_TAG, "showStepsDataView called.");
 
+        // This is not working
         ArrayList<Step> stepArrayList = getIntent().getParcelableArrayListExtra("steps");
+        Log.v(LOG_TAG, "getParcelableArrayListExtra called.");
         mStepsAdapter.setSteps(stepArrayList);
         Log.v(LOG_TAG, "setSteps called.");
     }

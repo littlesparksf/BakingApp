@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bakingapp.Pojos.Step;
+import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     @NonNull
     @Override
     public StepViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        Log.v(LOG_TAG, "onCreateViewHolder for steps called.");
         // Inflate the task_layout to a view
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.step_list_row, viewGroup, false);
@@ -38,7 +39,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
     @Override
     public void onBindViewHolder(StepViewHolder viewHolder, int position) {
-        Log.v(LOG_TAG, "onBindViewHolder for Reviews called.");
+        Log.v(LOG_TAG, "onBindViewHolder for Steps called.");
         Step stepListItem = mStepList.get(position);
         String stepShortDescription = stepListItem.getShortDescription();
         String stepLongDescription = stepListItem.getDescription();
@@ -49,7 +50,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mStepList != null ? mStepList.size() :0;
     }
 
     public List<Step> getRecipes() {
@@ -59,6 +60,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     public void setSteps(List<Step> stepList) {
         mStepList = stepList;
         notifyDataSetChanged();
+        Log.v(LOG_TAG, "setSteps called in Step Adapter.");
     }
     // Inner class for creating ViewHolders
     class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -1,4 +1,4 @@
-package com.example.bakingapp.Pojos;
+package com.example.bakingapp.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
