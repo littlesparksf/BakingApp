@@ -11,7 +11,7 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -21,7 +21,7 @@ public class VideoFragment extends Fragment {
 
     // Global variables
     SimpleExoPlayer mSimpleExoPlayer;
-    SimpleExoPlayerView mPlayerView;
+    PlayerView mPlayerView;
     DefaultBandwidthMeter bandwidthMeter;
     TrackSelection.Factory videoTrackSelectionFactory;
     TrackSelector trackSelector;
@@ -36,6 +36,7 @@ public class VideoFragment extends Fragment {
             trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
 
             // 2. Create the player
+            mPlayerView = mPlayerView.findViewById(R.id.player_view);
             mSimpleExoPlayer =
                     ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
 
