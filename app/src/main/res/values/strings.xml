@@ -4,8 +4,16 @@
     <string name="error_message">No recipes found.</string>
     <string name="recipe_details_title">Recipe Details</string>
     <string name="ingredients_list_title">Ingredients</string>
+    <string name="step_activity_title">Recipe Steps</string>
+
+    <!-- Strings for baking app widget -->
     <string name="widget_id">App Widget ID\u0020</string>
     <string name="URL">Tap to launch URL</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+
+
 
     <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
 
@@ -14,7 +22,6 @@
     <string name="settings_order_by_key" translatable="false">order_by</string>
 
     <string name="settings_order_by_default" translatable="false">Default Setting Here</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+
 
 </resources>

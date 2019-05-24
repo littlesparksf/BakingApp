@@ -1,11 +1,13 @@
 package com.example.bakingapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bakingapp.Adapters.RecipeAdapter;
@@ -30,6 +32,7 @@ public class RecipeDetails extends AppCompatActivity {
     private StepAdapter mStepsAdapter;
     private TextView mStepsEmptyView;
     //private ProgressBar mStepsLoadingIndicator;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,16 @@ public class RecipeDetails extends AppCompatActivity {
         TextView recipeNameView = findViewById(R.id.recipe_detail_name);
         String name = getIntent().getStringExtra("name");
         recipeNameView.setText(name);
+
+        ImageView recipeImageView = findViewById(R.id.recipe_detail_image);
+//        String recipeImageUrl = recipe.getImage();
+//        if (recipe.getImage() != null && recipeImageView != null){
+//            recipeImageView.setImageDrawable(recipeImageUrl);
+////        }
+//        Picasso.with(mContext)
+//                .load("http://ImageURL")
+//                .resize(width,height)
+//                .into(recipeImageView );
 
         TextView recipeIngredientsView = findViewById(R.id.recipe_ingredients_tv);
         ArrayList<Ingredient> ingredientArrayList = getIntent().getParcelableArrayListExtra("ingredients");

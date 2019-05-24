@@ -1,6 +1,8 @@
 package com.example.bakingapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
+import com.example.bakingapp.StepActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +65,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         notifyDataSetChanged();
         Log.v(LOG_TAG, "setSteps called in Step Adapter.");
     }
-    // Inner class for creating ViewHolders
+    // Inner class for creating ViewHol-ders
     class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Class variables for the author and content TextViews
@@ -87,6 +90,19 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 //            String url = step.getReviewUrl();
 //            Intent reviewUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 //            mContext.startActivity(reviewUrlIntent);
+
+
+            Bundle b = new Bundle();
+//            b.putInt("step_id", step.getId());
+//            b.putString("short_desc", step.getShortDescription());
+//            b.putString("long_desc", step.getDescription());
+//            b.putString("step_thumbnail_url", step.getThumbnailUrl());
+            b.putString("step_url", step.getVideoUrl());
+
+            final Intent intent = new Intent(mContext, StepActivity.class);
+            intent.putExtras(b);
+
+            mContext.startActivity(intent);
         }
     }
 }
