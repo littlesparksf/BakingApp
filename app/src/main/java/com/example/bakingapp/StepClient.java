@@ -6,7 +6,7 @@ package com.example.bakingapp;
 public class StepClient {
 
     private final static String BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
-    // Need to create step url ... baking/recipe/steps
+    // Need to create step url ... baking/recipeArrayList/steps
     public final StepService mStepService;
 
     public StepClient() {

@@ -23,7 +23,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
 
-    public static final String RECIPE_LIST_STATE_KEY = "movies";
+    public static final String RECIPE_LIST_STATE_KEY = "recipes";
     public static final String BUNDLE_RECYCLER_LAYOUT = "recycler_layout";
 
     RecipeService mRecipeService;
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mRecipesEmptyView;
     private ProgressBar mRecipesLoadingIndicator;
     Parcelable savedRecyclerLayoutState;
+    ArrayList<Recipe> recipeArrayList;
 
     // For two-pane tablet layout
     private boolean mTwoPane;
@@ -138,13 +139,13 @@ public class MainActivity extends AppCompatActivity {
                                    Response<ArrayList<Recipe>> response) {
 
                 // Test if response is successful
-                ArrayList<Recipe> recipe = response.body();
-                Log.d("LOG_TAG", recipe.get(0).getName());
+                recipeArrayList = response.body();
+                Log.d("LOG_TAG", recipeArrayList.get(0).getName());
 
                 mRecipesLoadingIndicator.setVisibility(View.INVISIBLE);
-                if (recipe != null) {
+                if (recipeArrayList != null) {
                     showRecipesDataView();
-                    mRecipesAdapter.setRecipes(recipe);
+                    mRecipesAdapter.setRecipes(recipeArrayList);
                 } else {
                     showRecipesErrorMessage();
                 }
@@ -160,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        ArrayList recipeListSavedState = (ArrayList) mRecipesAdapter.getRecipes();
+        ArrayList recipeListSavedState = recipeArrayList;
         outState.putParcelableArrayList(RECIPE_LIST_STATE_KEY, recipeListSavedState);
         outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, mRecipesRecyclerView.getLayoutManager().onSaveInstanceState());
     }

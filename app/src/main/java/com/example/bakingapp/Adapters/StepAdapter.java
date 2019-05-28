@@ -56,7 +56,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         return mStepList != null ? mStepList.size() :0;
     }
 
-    public List<Step> getRecipes() {
+    public List<Step> getSteps() {
         return mStepList;
     }
 
@@ -93,11 +93,12 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
 
             Bundle b = new Bundle();
-//            b.putInt("step_id", step.getId());
-//            b.putString("short_desc", step.getShortDescription());
-//            b.putString("long_desc", step.getDescription());
-//            b.putString("step_thumbnail_url", step.getThumbnailUrl());
-            b.putString("step_url", step.getVideoUrl());
+            b.putInt("step_id", step.getId());
+            b.putString("short_desc", step.getShortDescription());
+            b.putString("long_desc", step.getDescription());
+            b.putString("step_thumbnail_url", step.getThumbnailUrl());
+            b.putInt("step_position", stepPosition);
+            b.putString("step_video_url", step.getVideoUrl());
 
             final Intent intent = new Intent(mContext, StepActivity.class);
             intent.putExtras(b);
