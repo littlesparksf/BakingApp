@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
-import com.example.bakingapp.StepActivity;
+import com.example.bakingapp.StepDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
 
     private Context mContext;
-    private List<Step> mStepList;
+    private ArrayList<Step> mStepList;
     private static final String LOG_TAG = StepAdapter.class.getSimpleName();
 
     public StepAdapter(Context context, ArrayList<Step> stepList) {
@@ -60,7 +60,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         return mStepList;
     }
 
-    public void setSteps(List<Step> stepList) {
+    public void setSteps(ArrayList<Step> stepList) {
         mStepList = stepList;
         notifyDataSetChanged();
         Log.v(LOG_TAG, "setSteps called in Step Adapter.");
@@ -93,14 +93,18 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
 
             Bundle b = new Bundle();
-            b.putInt("step_id", step.getId());
-            b.putString("short_desc", step.getShortDescription());
-            b.putString("long_desc", step.getDescription());
-            b.putString("step_thumbnail_url", step.getThumbnailUrl());
             b.putInt("step_position", stepPosition);
-            b.putString("step_video_url", step.getVideoUrl());
+            b.putParcelableArrayList("steps", mStepList);
 
-            final Intent intent = new Intent(mContext, StepActivity.class);
+//            Bundle b = new Bundle();
+//            b.putInt("step_id", step.getId());
+//            b.putString("short_desc", step.getShortDescription());
+//            b.putString("long_desc", step.getDescription());
+//            b.putString("step_thumbnail_url", step.getThumbnailUrl());
+//            b.putInt("step_position", stepPosition);
+//            b.putString("step_video_url", step.getVideoUrl());
+
+            final Intent intent = new Intent(mContext, StepDetailActivity.class);
             intent.putExtras(b);
 
             mContext.startActivity(intent);

@@ -1,8 +1,10 @@
 package com.example.bakingapp;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.example.bakingapp.Model.Step;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -17,7 +19,17 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
+
 public class VideoFragment extends Fragment {
+
+    ArrayList<Step> mStepArrayList;
+    int mVideoNumber;
+
+    // Keys for saving state
+    public static final String STEP_LIST_STATE = "step_list_state";
+    public static final String STEP_NUMBER_STATE = "step_number_state";
+
 
     // Global variables
     SimpleExoPlayer mSimpleExoPlayer;
@@ -97,20 +109,10 @@ public class VideoFragment extends Fragment {
         releasePlayer();
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        if (Util.SDK_INT > 23) {
-//            initializeVideoPlayer(videoUri);
-//        }
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (Util.SDK_INT <= 23 || mSimpleExoPlayer == null) {
-//            initializeVideoPlayer(videoUri);
-//        }
-//    }
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(STEP_LIST_STATE,mStepArrayList);
+        outState.putInt(STEP_NUMBER_STATE, mVideoNumber);
+    }
 }

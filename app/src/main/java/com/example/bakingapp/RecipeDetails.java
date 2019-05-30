@@ -11,11 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bakingapp.Adapters.RecipeAdapter;
 import com.example.bakingapp.Adapters.StepAdapter;
 import com.example.bakingapp.Model.Ingredient;
 import com.example.bakingapp.Model.Step;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,6 +36,7 @@ public class RecipeDetails extends AppCompatActivity {
 
     private Context mContext;
     Parcelable savedRecyclerLayoutState;
+    LinearLayoutManager mStepsLinearLayoutManager;
 
     // ArrayList TextView variables
     ArrayList<Ingredient> ingredientArrayList;
@@ -59,18 +60,23 @@ public class RecipeDetails extends AppCompatActivity {
         mStepsEmptyView = findViewById(R.id.steps_empty_view);
         //mStepsLoadingIndicator = findViewById(R.id.steps_loading_indicator);
 
-        LinearLayoutManager reviewsLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mStepsRecyclerView.setLayoutManager(reviewsLinearLayoutManager);
+        LinearLayoutManager mStepsLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mStepsRecyclerView.setLayoutManager(mStepsLinearLayoutManager);
         mStepsRecyclerView.setHasFixedSize(true);
         mStepsAdapter = new StepAdapter(RecipeDetails.this, new ArrayList<Step>());
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         Log.v(LOG_TAG, "Adapter set on recycler view.");
 
-
         /* Once all of our views are setup, we can load the steps data. */
           if (savedInstanceState == null) {
               loadSteps();
               populateUI();
+          } else if (savedInstanceState != null) {
+              savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_STEP_RECYCLER_LAYOUT);
+              loadSteps();
+              if (savedRecyclerLayoutState != null) {
+                  mStepsLinearLayoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
+              }
           }
 
         Log.v(LOG_TAG, "loadStepscalled.");
@@ -83,19 +89,21 @@ public class RecipeDetails extends AppCompatActivity {
         Log.v(LOG_TAG, "name: " + name);
         recipeNameView.setText(name);
 
-        ImageView recipeImageView = findViewById(R.id.recipe_detail_image);
-        String recipeImageUrl = "https://images.app.goo.gl/2rbE73RHMuKsiWh27";
-        // getIntent().getStringExtra("image")
-        Log.v(LOG_TAG, "imageurl: " + recipeImageUrl);
+        String recipeImageUrl = getIntent().getStringExtra("image");
+            //    "http://images.app.goo.gl/2rbE73RHMuKsiWh27";
 
-        if (recipeImageUrl.isEmpty()){
-            recipeImageView.setImageResource(R.drawable.cat);
+        ImageView glideImageView = findViewById(R.id.recipe_detail_image_glide);
+
+        if (recipeImageUrl.length()==0){
+            Glide.with(this)
+                    .load("http://inthecheesefactory.com/uploads/source/glidepicasso/cover.jpg")
+                    .into(glideImageView);
         } else {
-            Picasso.with(this)
+            Glide.with(this)
                     .load(recipeImageUrl)
-                    .placeholder(R.drawable.cat)
-                    .into(recipeImageView);
+                    .into(glideImageView);
         }
+
         ingredientArrayList = getIntent().getParcelableArrayListExtra("ingredients");
 
         for (int i=0; i<ingredientArrayList.size(); i++) {
@@ -140,13 +148,13 @@ public class RecipeDetails extends AppCompatActivity {
         outState.putParcelableArrayList(INGREDIENT_STATE_KEY, ingredientListSavedState);
     }
 
-//    @Override
-//    protected void onRestoreInstanceState (Bundle savedInstanceState) {
-//        ArrayList stepListSavedState = savedInstanceState.getParcelableArrayList(STEP_LIST_STATE_KEY);
-//        mStepsAdapter.setSteps(stepListSavedState);
-//        savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_STEP_RECYCLER_LAYOUT);
-//        mStepsRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
-//        showStepsDataView();
+    @Override
+    protected void onRestoreInstanceState (Bundle savedInstanceState) {
+        ArrayList stepListSavedState = savedInstanceState.getParcelableArrayList(STEP_LIST_STATE_KEY);
+        mStepsAdapter.setSteps(stepListSavedState);
+        savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_STEP_RECYCLER_LAYOUT);
+        mStepsRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        loadSteps();
 //
 //        ArrayList ingredientListSavedState = savedInstanceState.getParcelableArrayList(INGREDIENT_STATE_KEY);
 //        TextView recipeIngredientsView = findViewById(R.id.recipe_ingredients_tv);
@@ -156,5 +164,5 @@ public class RecipeDetails extends AppCompatActivity {
 ////            recipeIngredientsView.append(ingredientArrayList.get(i).getIngredient());
 ////            recipeIngredientsView.append("\n");
 ////        }
-  //  }
+    }
 }

@@ -35,14 +35,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.bakingapp.MainActivity" />
         </activity>
-        <!-- StepActivity-->
+        <!-- StepDetailActivity-->
         <activity
-            android:name=".StepActivity"
+            android:name=".StepDetailActivity"
             android:label="@string/step_activity_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.bakingapp.RecipeDetails"/>
         </activity>
+
+        <!-- Glide -->
+        <meta-data android:name="Glide"
+            android:value="AppGlideModule"/>
+
     </application>
 
 </manifest>

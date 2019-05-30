@@ -101,6 +101,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             b.putString("name", recipe.getName());
             b.putParcelableArrayList("ingredients", recipe.getIngredients());
             b.putParcelableArrayList("steps", recipe.getSteps());
+            b.putString("image", recipe.getImage());
 
             final Intent intent = new Intent(mContext, RecipeDetails.class);
             intent.putExtras(b);
