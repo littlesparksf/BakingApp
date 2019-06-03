@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private RecipeAdapter mRecipesAdapter;
     private TextView mRecipesEmptyView;
     private ProgressBar mRecipesLoadingIndicator;
-    Parcelable savedRecyclerLayoutState;
+    //Parcelable savedRecyclerLayoutState;
     ArrayList<Recipe> recipeArrayList;
 
     // For two-pane tablet layout
@@ -163,14 +163,15 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         ArrayList recipeListSavedState = recipeArrayList;
         outState.putParcelableArrayList(RECIPE_LIST_STATE_KEY, recipeListSavedState);
-        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, mRecipesRecyclerView.getLayoutManager().onSaveInstanceState());
+        Parcelable savedRecyclerLayoutState = mRecipesRecyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, savedRecyclerLayoutState );
     }
 
     @Override
     protected void onRestoreInstanceState (Bundle savedInstanceState) {
         ArrayList recipeListSavedState = savedInstanceState.getParcelableArrayList(RECIPE_LIST_STATE_KEY);
         mRecipesAdapter.setRecipes(recipeListSavedState);
-        savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+        Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
         mRecipesRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         showRecipesDataView();
     }
