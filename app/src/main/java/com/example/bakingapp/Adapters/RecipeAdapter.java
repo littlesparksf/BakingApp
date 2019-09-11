@@ -2,6 +2,8 @@ package com.example.bakingapp.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,16 +17,22 @@ import com.example.bakingapp.Model.Ingredient;
 import com.example.bakingapp.Model.Recipe;
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
-import com.example.bakingapp.RecipeDetails;
+import com.example.bakingapp.Activities.RecipeDetails;
+import com.example.bakingapp.Utils.ConstantsUtil;
+import com.example.bakingapp.Widget.WidgetService;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>  {
 
     private Context mContext;
     private ArrayList<Recipe> mRecipeList;
     private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
+    private String mJsonResult;
 
     public RecipeAdapter(Context context, ArrayList<Recipe> recipeList)
     {
@@ -107,6 +115,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             intent.putExtras(b);
 
             mContext.startActivity(intent);
+
+            //Save the recipe info
+            SharedPreferences.Editor editor = mContext.getSharedPreferences(ConstantsUtil.SHARED_PREFERENCES, MODE_PRIVATE).edit();
+            mJsonResult = new Gson().toJson(mRecipeList);
+            editor.putString(ConstantsUtil.JSON_RESULT_EXTRA, mJsonResult);
+            editor.apply();
+
+            if(Build.VERSION.SDK_INT > 25){
+                //Start the widget service to update the widget
+                WidgetService.startActionOpenRecipeO(mContext);
+            }
+            else{
+                //For Android O -Start the widget service
+                WidgetService.startActionOpenRecipe(mContext);
+            }
         }
     }
 }

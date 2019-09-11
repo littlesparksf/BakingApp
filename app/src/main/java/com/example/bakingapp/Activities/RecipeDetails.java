@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.Activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.example.bakingapp.Adapters.RecipeAdapter;
 import com.example.bakingapp.Adapters.StepAdapter;
 import com.example.bakingapp.Model.Ingredient;
 import com.example.bakingapp.Model.Step;
+import com.example.bakingapp.R;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,7 @@ public class RecipeDetails extends AppCompatActivity {
     String recipeImageUrl;
     ImageView recipeImageView;
     TextView recipeTitleView;
+    String recipeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,8 @@ public class RecipeDetails extends AppCompatActivity {
 
         /* Once all of our views are setup, we can load the steps data. */
           if (savedInstanceState == null) {
+              ingredientArrayList = getIntent().getParcelableArrayListExtra("ingredients");
+              recipeName = getIntent().getStringExtra("name");
               loadSteps();
               populateUI();
           } else if (savedInstanceState != null) {
@@ -98,9 +102,8 @@ public class RecipeDetails extends AppCompatActivity {
     private void populateUI() {
 
         TextView recipeNameView = findViewById(R.id.recipe_detail_name);
-        String name = getIntent().getStringExtra("name");
-        Log.v(LOG_TAG, "name: " + name);
-        recipeNameView.setText(name);
+        Log.v(LOG_TAG, "name: " + recipeName);
+        recipeNameView.setText(recipeName);
 
         ImageView glideImageView = findViewById(R.id.recipe_detail_image_glide);
 
@@ -117,8 +120,6 @@ public class RecipeDetails extends AppCompatActivity {
                     .load(recipeImageUrl)
                     .into(glideImageView);
         }
-
-        ingredientArrayList = getIntent().getParcelableArrayListExtra("ingredients");
 
         for (int i=0; i<ingredientArrayList.size(); i++) {
             recipeIngredientsView.append(ingredientArrayList.get(i).getIngredient());

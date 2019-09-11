@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
-import com.example.bakingapp.StepDetailActivity;
+import com.example.bakingapp.Activities.StepDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,6 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 //            String url = step.getReviewUrl();
 //            Intent reviewUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 //            mContext.startActivity(reviewUrlIntent);
-
 
             Bundle b = new Bundle();
             b.putInt("step_position", stepPosition);

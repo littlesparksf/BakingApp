@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.Activities;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,16 +13,21 @@ import android.widget.TextView;
 
 import com.example.bakingapp.Adapters.RecipeAdapter;
 import com.example.bakingapp.Model.Recipe;
+import com.example.bakingapp.R;
+import com.example.bakingapp.RecipeClient;
+import com.example.bakingapp.RecipeService;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private final String TAG = MainActivity.class.getSimpleName();
+    public static final String RECIPE_JSON_STATE = "recipe_json_state";
     public static final String RECIPE_LIST_STATE_KEY = "recipes";
     public static final String BUNDLE_RECYCLER_LAYOUT = "recycler_layout";
 
@@ -34,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView mRecipesEmptyView;
     private ProgressBar mRecipesLoadingIndicator;
     //Parcelable savedRecyclerLayoutState;
-    ArrayList<Recipe> recipeArrayList;
+    String mJsonResult;
+    ArrayList<Recipe> recipeArrayList = new ArrayList<>();
+
+    @BindView(R.id.recipes_recycler_view) RecyclerView mRecyclerViewRecipes;
 
     // For two-pane tablet layout
     private boolean mTwoPane;
@@ -49,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if ((findViewById(R.id.baking_main_linear_layout) !=null)){
-            mTwoPane=true;
+            mTwoPane  = true;
             // Set up two pane layout
+            // Put in video player tv and ingredients tv
+        } else {
+            mTwoPane = false;
         }
 
         mRecipeService = new RecipeClient().mRecipeService;
