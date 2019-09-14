@@ -11,11 +11,27 @@
     <!-- Strings for baking app widget -->
     <string name="widget_id">App Widget ID\u0020</string>
     <string name="URL">Tap to launch URL</string>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text">Bake It Up</string>
+    <string name="widget_ingredients_title">Ingredients</string>
     <string name="add_widget">Add widget</string>
 
+    <string name="placeholder_image">Placeholder Image</string>
 
+    <string name="recipe_icon">Recipe Icon</string>
 
+    <string name="kilogram_icon">Kilogram Icon</string>
+
+    <string name="checked_icon">Checked Icon</string>
+
+    <!-- Strings for dialog box -->
+
+    <string name="no_internet_connection">No internet connection.</string>
+
+    <string name="close_button_x">Close button x.</string>
+
+    <string name="exit">Exit</string>
+
+    <string name="retry">Retry</string>
 
     <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
 
@@ -25,5 +41,8 @@
 
     <string name="settings_order_by_default" translatable="false">Default Setting Here</string>
 
+    <!-- Strings for Video Fragment -->
+
+    <string name="video_player" translatable="false">Video Player</string>
 
 </resources>

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     // For two-pane tablet layout
     private boolean mTwoPane;
     // Figure out logic for two panes in onCreate
+    // Needs to put RecipeFragment and StepFragment
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 

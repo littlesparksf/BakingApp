@@ -20,7 +20,7 @@ import com.example.bakingapp.R;
 
 import java.util.ArrayList;
 
-public class RecipeDetails extends AppCompatActivity {
+public class RecipeActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
 
@@ -77,7 +77,7 @@ public class RecipeDetails extends AppCompatActivity {
         LinearLayoutManager mStepsLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
         mStepsRecyclerView.setLayoutManager(mStepsLinearLayoutManager);
         mStepsRecyclerView.setHasFixedSize(true);
-        mStepsAdapter = new StepAdapter(RecipeDetails.this, new ArrayList<Step>());
+        mStepsAdapter = new StepAdapter(RecipeActivity.this, new ArrayList<Step>());
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         Log.v(LOG_TAG, "Adapter set on recycler view.");
 

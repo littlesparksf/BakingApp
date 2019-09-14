@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    tools:context="com.example.bakingapp.MainActivity">
+    tools:context="com.example.bakingapp.Activities.MainActivity"
+    android:id="@+id/main_activity_tablet_layout">
 
     <!--
     This layout is a two-pane layout for the master/detail flow.
@@ -14,7 +15,7 @@
     <!-- The static MasterListFragment -->
     <fragment
         android:id="@+id/master_list_fragment"
-        android:name="com.example.bakingapp.MasterListFragment"
+        android:name="com.example.bakingapp.UI.MasterListFragment"
         android:layout_width="400dp"
         android:layout_height="match_parent" />
 
@@ -41,23 +42,16 @@
         one for each Android-Me part (head, body, legs) -->
 
         <FrameLayout
-            android:id="@+id/head_container"
+            android:id="@+id/ingredients_container"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:scaleType="centerInside"/>
 
         <FrameLayout
-            android:id="@+id/body_container"
+            android:id="@+id/steps_container"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:scaleType="centerInside"/>
-
-        <FrameLayout
-            android:id="@+id/leg_container"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:scaleType="centerInside"/>
-
 
     </LinearLayout>
 

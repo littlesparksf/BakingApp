@@ -17,7 +17,7 @@ import com.example.bakingapp.Model.Ingredient;
 import com.example.bakingapp.Model.Recipe;
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
-import com.example.bakingapp.Activities.RecipeDetails;
+import com.example.bakingapp.Activities.RecipeActivity;
 import com.example.bakingapp.Utils.ConstantsUtil;
 import com.example.bakingapp.Widget.WidgetService;
 import com.google.gson.Gson;
@@ -111,7 +111,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             b.putParcelableArrayList("steps", recipe.getSteps());
             b.putString("image", recipe.getImage());
 
-            final Intent intent = new Intent(mContext, RecipeDetails.class);
+            final Intent intent = new Intent(mContext, RecipeActivity.class);
             intent.putExtras(b);
 
             mContext.startActivity(intent);

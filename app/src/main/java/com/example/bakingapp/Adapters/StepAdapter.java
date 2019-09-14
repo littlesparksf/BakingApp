@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
-import com.example.bakingapp.Activities.StepDetailActivity;
+import com.example.bakingapp.Activities.StepActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +103,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 //            b.putInt("step_position", stepPosition);
 //            b.putString("step_video_url", step.getVideoUrl());
 
-            final Intent intent = new Intent(mContext, StepDetailActivity.class);
+            final Intent intent = new Intent(mContext, StepActivity.class);
             intent.putExtras(b);
 
             mContext.startActivity(intent);
