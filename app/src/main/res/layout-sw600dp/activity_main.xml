@@ -15,7 +15,7 @@
     <!-- The static MasterListFragment -->
     <fragment
         android:id="@+id/master_list_fragment"
-        android:name="com.example.bakingapp.UI.MasterListFragment"
+        android:name="com.example.bakingapp.Activities.MainActivity"
         android:layout_width="400dp"
         android:layout_height="match_parent" />
 

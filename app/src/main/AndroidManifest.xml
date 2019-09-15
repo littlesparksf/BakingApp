@@ -21,7 +21,8 @@
         </activity>
         <activity
             android:name=".Activities.RecipeActivity"
-            android:label="@string/recipe_details_title">
+            android:label="@string/recipe_details_title"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.bakingapp.Activities.MainActivity" />

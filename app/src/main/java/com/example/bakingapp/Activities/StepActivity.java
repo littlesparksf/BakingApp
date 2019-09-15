@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StepActivity extends AppCompatActivity implements View.OnClickListener, StepNumberAdapter.OnStepClick {
+public class  StepActivity extends AppCompatActivity implements View.OnClickListener, StepNumberAdapter.OnStepClick {
 
     // Keys for saving state
     public static final String STEP_LIST_STATE = "step_list_state";

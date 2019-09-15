@@ -82,19 +82,17 @@ public class RecipeActivity extends AppCompatActivity {
         Log.v(LOG_TAG, "Adapter set on recycler view.");
 
         /* Once all of our views are setup, we can load the steps data. */
-          if (savedInstanceState == null) {
-              ingredientArrayList = getIntent().getParcelableArrayListExtra("ingredients");
-              recipeName = getIntent().getStringExtra("name");
-              loadSteps();
-              populateUI();
-          } else if (savedInstanceState != null) {
-              savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_STEP_RECYCLER_LAYOUT);
-              loadSteps();
-              //populateUI();
-              if (savedRecyclerLayoutState != null) {
-                  mStepsLinearLayoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
+
+        ingredientArrayList = getIntent().getParcelableArrayListExtra("ingredients");
+        recipeName = getIntent().getStringExtra("name");
+        if (savedInstanceState != null) {
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_STEP_RECYCLER_LAYOUT);
+            if (savedRecyclerLayoutState != null) {
+                mStepsLinearLayoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
               }
           }
+        loadSteps();
+        populateUI();
 
         Log.v(LOG_TAG, "loadStepscalled.");
     }
