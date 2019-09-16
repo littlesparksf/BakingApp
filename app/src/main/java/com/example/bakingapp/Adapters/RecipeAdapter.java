@@ -13,11 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.bakingapp.Activities.RecipeActivity;
 import com.example.bakingapp.Model.Ingredient;
 import com.example.bakingapp.Model.Recipe;
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
-import com.example.bakingapp.Activities.RecipeActivity;
 import com.example.bakingapp.Utils.ConstantsUtil;
 import com.example.bakingapp.Widget.WidgetService;
 import com.google.gson.Gson;
@@ -44,7 +44,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        // Inflate the recipe_list_layout to a view
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.recipe_list_row, viewGroup, false);
 

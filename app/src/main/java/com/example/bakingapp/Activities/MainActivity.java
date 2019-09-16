@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.recipes_recycler_view) RecyclerView mRecyclerViewRecipes;
 
     // For two-pane tablet layout
-    private boolean mTwoPane;
+    private boolean isTablet;
     // Figure out logic for two panes in onCreate
     // Needs to put RecipeFragment and StepFragment
 
@@ -57,12 +57,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if ((findViewById(R.id.baking_main_linear_layout) !=null)){
-            mTwoPane  = true;
-            // Set up two pane layout
-            // Put in video player tv and ingredients tv
+        if ((findViewById(R.id.main_activity_tablet_layout) !=null)){
+            isTablet  = true;
+            // Not sure where to put gridlayout mgr span
         } else {
-            mTwoPane = false;
+            isTablet = false;
         }
 
         mRecipeService = new RecipeClient().mRecipeService;
@@ -92,6 +91,32 @@ public class MainActivity extends AppCompatActivity {
 
         // Call the constructor of CustomAdapter to send the reference and data to the Adapter
         mRecipesAdapter = new RecipeAdapter(MainActivity.this, new ArrayList<Recipe>());
+
+
+        //       Layout decision of grid vs linear layout needs to come here. Only need a few lines of the code snip below.
+        //
+        //        call.enqueue(new Callback<ArrayList<Recipe>>() {
+        //            @Override
+        //            public void onResponse(Call<ArrayList<Recipe>> call, Response<ArrayList<Recipe>> response) {
+        //
+        //                mRecipeArrayList = response.body();
+        //
+        //                mJsonResult = new Gson().toJson(response.body());
+        //
+        //                recipeAdapter = new RecipeAdapter(RecipeActivity.this, mRecipeArrayList, mJsonResult);
+        //                RecyclerView.LayoutManager mLayoutManager;
+        //                if(isTablet){
+        //                    mLayoutManager = new GridLayoutManager(RecipeActivity.this, 2);
+        //                }
+        //                else{
+        //                    mLayoutManager = new LinearLayoutManager(RecipeActivity.this);
+        //                }
+        //
+        //                mRecyclerViewRecipes.setLayoutManager(mLayoutManager);
+        //                mRecyclerViewRecipes.setAdapter(recipeAdapter);
+        //
+        //            }
+
 
         // Set the adapter on the {@link RecyclerView}
         // so the list can be populated in the user interface
