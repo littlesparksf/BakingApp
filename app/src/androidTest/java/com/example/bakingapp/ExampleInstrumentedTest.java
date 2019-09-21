@@ -69,13 +69,13 @@ public class ExampleInstrumentedTest {
 //        //Perform Recyclerview click on item at position
 //        onView(withId(R.id.steps_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 //
-////        //Check if intent (RecipeActivity to RecipeDetailsActivity) has RECIPE_INTENT_EXTRA
+////        //Check if intent (RecipeDetailActivity to RecipeDetailsActivity) has RECIPE_INTENT_EXTRA
 ////        intended(hasExtraWithKey(ConstantsUtil.RECIPE_INTENT_EXTRA));
 ////
 ////        //Perform click action on start cooking button
 ////        onView(withId(R.id.btn_start_cooking)).perform(ViewActions.click());
 ////
 ////        //Check if intent (RecipeDetailsActivity to CookingActivity) has RECIPE_INTENT_EXTRA
-////        intended(hasComponent(RecipeActivity.class.getName()));
+////        intended(hasComponent(RecipeDetailActivity.class.getName()));
 //    }
 }

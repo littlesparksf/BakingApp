@@ -3,6 +3,7 @@ package com.example.bakingapp.Activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,10 +18,11 @@ import com.example.bakingapp.Adapters.StepAdapter;
 import com.example.bakingapp.Model.Ingredient;
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
+import com.example.bakingapp.Utils.ConstantsUtil;
 
 import java.util.ArrayList;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
 
@@ -77,7 +79,7 @@ public class RecipeActivity extends AppCompatActivity {
         LinearLayoutManager mStepsLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
         mStepsRecyclerView.setLayoutManager(mStepsLinearLayoutManager);
         mStepsRecyclerView.setHasFixedSize(true);
-        mStepsAdapter = new StepAdapter(RecipeActivity.this, new ArrayList<Step>());
+        mStepsAdapter = new StepAdapter(RecipeDetailActivity.this, new ArrayList<Step>());
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         Log.v(LOG_TAG, "Adapter set on recycler view.");
 
@@ -95,6 +97,19 @@ public class RecipeActivity extends AppCompatActivity {
         populateUI();
 
         Log.v(LOG_TAG, "loadStepscalled.");
+    }
+
+    public void playVideoReplace(Step step) {
+        VideoFragment videoPlayerFragment = new VideoFragment();
+        Bundle stepsBundle = new Bundle();
+        stepsBundle.putParcelable(ConstantsUtil.STEP_SINGLE, step);
+        videoPlayerFragment.setArguments(stepsBundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fl_player_container, videoPlayerFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void populateUI() {

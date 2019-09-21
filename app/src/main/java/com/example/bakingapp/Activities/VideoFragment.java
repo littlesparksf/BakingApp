@@ -11,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +42,8 @@ public class VideoFragment extends Fragment {
     public static final String STEP_PLAY_WINDOW_INDEX = "step_play_window_index";
     public static final String STEP_SINGLE = "step_single";
 
+    int mVideoNumber = 0;
+
     @BindView(R.id.tv_step_title)
     TextView mStepTitle;
 
@@ -51,6 +55,15 @@ public class VideoFragment extends Fragment {
 
     @BindView(R.id.iv_video_placeholder)
     ImageView mImageViewPlaceholder;
+
+    @BindView(R.id.fl_player_container)
+    FrameLayout mFragmentContainer;
+
+    @BindView(R.id.btn_next_step)
+    Button mButtonNextStep;
+
+    @BindView(R.id.btn_previous_step)
+    Button mButtonPreviousStep;
 
     SimpleExoPlayer mSimpleExoPlayer;
 
@@ -102,7 +115,7 @@ public class VideoFragment extends Fragment {
             mVideoUri = Uri.parse(savedInstanceState.getString(STEP_URI));
         } else {
             if (getArguments() != null) {
-                mImageViewPlaceholder.setVisibility(View.GONE);
+                 mImageViewPlaceholder.setVisibility(View.GONE);
                 mPlayerView.setVisibility(View.VISIBLE);
 
                 mStep = getArguments().getParcelable(ConstantsUtil.STEP_SINGLE);

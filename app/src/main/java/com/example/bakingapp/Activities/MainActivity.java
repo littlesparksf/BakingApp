@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     // For two-pane tablet layout
     private boolean isTablet;
     // Figure out logic for two panes in onCreate
-    // Needs to put RecipeFragment and StepFragment
+    // Needs to put RecipeFragment and StepListFragment
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -80,43 +81,22 @@ public class MainActivity extends AppCompatActivity {
         // Loading indicator will be shown as data loads
         mRecipesLoadingIndicator = (ProgressBar) findViewById(R.id.recipes_loading_indicator);
 
-        // Set a LinearLayoutManager
-        LinearLayoutManager reviewsLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager mLayoutManager;
+        if(isTablet){
+            mLayoutManager = new GridLayoutManager(MainActivity.this, 2);
+        }
+        else{
+            mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        }
 
         // Set the Layout Manager to the RecyclerView
-        mRecipesRecyclerView.setLayoutManager(reviewsLinearLayoutManager);
+        mRecipesRecyclerView.setLayoutManager(mLayoutManager);
 
-        // Setting to improve performance if changes in content do not change in child layout size
-        mRecipesRecyclerView.setHasFixedSize(true);
+//        // Setting to improve performance if changes in content do not change in child layout size
+//        mRecipesRecyclerView.setHasFixedSize(true);
 
         // Call the constructor of CustomAdapter to send the reference and data to the Adapter
         mRecipesAdapter = new RecipeAdapter(MainActivity.this, new ArrayList<Recipe>());
-
-
-        //       Layout decision of grid vs linear layout needs to come here. Only need a few lines of the code snip below.
-        //
-        //        call.enqueue(new Callback<ArrayList<Recipe>>() {
-        //            @Override
-        //            public void onResponse(Call<ArrayList<Recipe>> call, Response<ArrayList<Recipe>> response) {
-        //
-        //                mRecipeArrayList = response.body();
-        //
-        //                mJsonResult = new Gson().toJson(response.body());
-        //
-        //                recipeAdapter = new RecipeAdapter(RecipeActivity.this, mRecipeArrayList, mJsonResult);
-        //                RecyclerView.LayoutManager mLayoutManager;
-        //                if(isTablet){
-        //                    mLayoutManager = new GridLayoutManager(RecipeActivity.this, 2);
-        //                }
-        //                else{
-        //                    mLayoutManager = new LinearLayoutManager(RecipeActivity.this);
-        //                }
-        //
-        //                mRecyclerViewRecipes.setLayoutManager(mLayoutManager);
-        //                mRecyclerViewRecipes.setAdapter(recipeAdapter);
-        //
-        //            }
-
 
         // Set the adapter on the {@link RecyclerView}
         // so the list can be populated in the user interface

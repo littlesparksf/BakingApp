@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.bakingapp.Activities.StepDetailActivity;
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
-import com.example.bakingapp.Activities.StepActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +65,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         notifyDataSetChanged();
         Log.v(LOG_TAG, "setSteps called in Step Adapter.");
     }
-    // Inner class for creating ViewHol-ders
+    // Inner class for creating ViewHolders
     class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Class variables for the author and content TextViews
@@ -103,7 +103,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 //            b.putInt("step_position", stepPosition);
 //            b.putString("step_video_url", step.getVideoUrl());
 
-            final Intent intent = new Intent(mContext, StepActivity.class);
+            final Intent intent = new Intent(mContext, StepDetailActivity.class);
             intent.putExtras(b);
 
             mContext.startActivity(intent);

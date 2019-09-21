@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.example.bakingapp.Activities.RecipeActivity;
+import com.example.bakingapp.Activities.RecipeDetailActivity;
 import com.example.bakingapp.R;
 import com.example.bakingapp.Utils.ConstantsUtil;
 
@@ -24,7 +24,7 @@ public class BakingAppWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
 
         // Create an Intent to launch MainActivity
-        Intent intent = new Intent(context, RecipeActivity.class);
+        Intent intent = new Intent(context, RecipeDetailActivity.class);
         intent.putExtra(ConstantsUtil.WIDGET_EXTRA, "FROM_WIDGET");
 
         // Create a pending intent to wrap intent

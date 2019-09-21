@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bakingapp.Activities.RecipeActivity;
+import com.example.bakingapp.Activities.RecipeDetailActivity;
 import com.example.bakingapp.Model.Ingredient;
 import com.example.bakingapp.Model.Recipe;
 import com.example.bakingapp.Model.Step;
@@ -111,7 +111,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             b.putParcelableArrayList("steps", recipe.getSteps());
             b.putString("image", recipe.getImage());
 
-            final Intent intent = new Intent(mContext, RecipeActivity.class);
+            final Intent intent = new Intent(mContext, RecipeDetailActivity.class);
             intent.putExtras(b);
 
             mContext.startActivity(intent);

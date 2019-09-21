@@ -20,20 +20,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.RecipeActivity"
+            android:name=".Activities.RecipeDetailActivity"
             android:label="@string/recipe_details_title"
             android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.bakingapp.Activities.MainActivity" />
         </activity>
-        <!-- StepActivity-->
+        <!-- StepDetailActivity-->
         <activity
-            android:name=".Activities.StepActivity"
+            android:name=".Activities.StepDetailActivity"
             android:label="@string/step_activity_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.bakingapp.Activities.RecipeActivity"/>
+                android:value="com.example.bakingapp.Activities.RecipeDetailActivity"/>
         </activity>
 
         <!-- Glide -->

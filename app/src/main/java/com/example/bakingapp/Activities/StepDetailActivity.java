@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class  StepActivity extends AppCompatActivity implements View.OnClickListener, StepNumberAdapter.OnStepClick {
+public class StepDetailActivity extends AppCompatActivity implements View.OnClickListener, StepNumberAdapter.OnStepClick {
 
     // Keys for saving state
     public static final String STEP_LIST_STATE = "step_list_state";
@@ -85,9 +85,9 @@ public class  StepActivity extends AppCompatActivity implements View.OnClickList
             }
         }
         // If no saved state, initiate fragment
-        if (savedInstanceState != null) {
+        //if (savedInstanceState != null) {
             playVideo(mStepArrayList.get(mVideoNumber));
-        }
+        //}
 
         ButterKnife.bind(this);
 
@@ -97,7 +97,6 @@ public class  StepActivity extends AppCompatActivity implements View.OnClickList
     public void playVideo(Step step) {
         VideoFragment videoPlayerFragment = new VideoFragment();
         Bundle stepsBundle = new Bundle();
-        stepsBundle = new Bundle();
         stepsBundle.putParcelable(ConstantsUtil.STEP_SINGLE, step);
         videoPlayerFragment.setArguments(stepsBundle);
 
