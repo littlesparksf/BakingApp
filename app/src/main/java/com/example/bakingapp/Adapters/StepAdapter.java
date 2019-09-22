@@ -24,8 +24,8 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     private ArrayList<Step> mStepList;
     private static final String LOG_TAG = StepAdapter.class.getSimpleName();
 
-    public StepAdapter(Context context, ArrayList<Step> stepList) {
-        this.mContext = context;
+    public StepAdapter(ArrayList<Step> stepList) {
+        //this.mContext = context;
         this.mStepList = stepList;
     }
 

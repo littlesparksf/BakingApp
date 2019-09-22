@@ -7,6 +7,7 @@ public class ConstantsUtil {
     public static final String WIDGET_EXTRA = "widget_extra";
     public static final String RECIPE_INTENT_EXTRA = "recipe_intent_extra";
     public static final String STEP_SINGLE = "step_single";
+    public static final String RECIPE_SINGLE = "recipe_single";
     public static final String STEP_INTENT_EXTRA = "step_intent_extra";
     public static final String SHARED_PREFERENCES = "MyPrefs";
 
