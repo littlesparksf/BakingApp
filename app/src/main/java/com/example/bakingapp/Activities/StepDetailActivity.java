@@ -38,6 +38,9 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     @BindView(R.id.fl_player_container)
     FrameLayout mFragmentContainer;
 
+    @BindView(R.id.recipe_fragment_container)
+    FrameLayout mRecipeFragmentContainer;
+
     @BindView(R.id.btn_next_step)
     Button mButtonNextStep;
 
@@ -116,6 +119,19 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.fl_player_container, videoPlayerFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void loadRecipeDetailFragment(Step step) {
+        RecipeFragment recipeDetailFragment = new RecipeFragment();
+        Bundle stepsBundle = new Bundle();
+        stepsBundle.putParcelable(ConstantsUtil.STEP_SINGLE, step);
+        recipeDetailFragment.setArguments(stepsBundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.recipe_fragment_container, recipeDetailFragment)
                 .addToBackStack(null)
                 .commit();
     }

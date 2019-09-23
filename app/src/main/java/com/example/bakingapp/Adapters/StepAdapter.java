@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.bakingapp.Activities.RecipeFragment;
 import com.example.bakingapp.Activities.StepDetailActivity;
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
@@ -24,8 +25,8 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     private ArrayList<Step> mStepList;
     private static final String LOG_TAG = StepAdapter.class.getSimpleName();
 
-    public StepAdapter(ArrayList<Step> stepList) {
-        //this.mContext = context;
+    public StepAdapter(RecipeFragment context, ArrayList<Step> stepList) {
+        this.mContext = context;
         this.mStepList = stepList;
     }
 

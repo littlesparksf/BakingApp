@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bakingapp.Adapters.RecipeAdapter;
 import com.example.bakingapp.Adapters.StepAdapter;
 import com.example.bakingapp.Model.Ingredient;
@@ -70,16 +71,18 @@ public class RecipeFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.activity_recipe_details, container, false);
+        View root = inflater.inflate(R.layout.recipe_fragment, container, false);
         //  Get a reference to the RecyclerView
         mStepsRecyclerView = root.findViewById(R.id.steps_recycler_view);
         Log.v(LOG_TAG, "Reviews recycler view found.");
         // Set layout manager
         mStepsRecyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
+
         // Create an adapter
-        StepAdapter mStepAdapter = new StepAdapter(new ArrayList<Step>());
+        mStepsAdapter = new StepAdapter(this, new ArrayList<Step>());
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         Log.v(LOG_TAG, "Adapter set on recycler view.");
+
         // Set item animator to DefaultAnimator
         mStepsRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -89,15 +92,36 @@ public class RecipeFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-//        // Get a reference to recipe image view
-//        recipeImageView = view.findViewById(R.id.recipe_detail_image_glide);
-//
-//        // Set up Ingredients TextView
-//        recipeIngredientsView = view.findViewById(R.id.recipe_ingredients_tv);
-//
-//        mStepsEmptyView = view.findViewById(R.id.steps_empty_view);
-//        //mStepsLoadingIndicator = findViewById(R.id.steps_loading_indicator);
+        // Set up Ingredients TextView
+        recipeIngredientsView = view.findViewById(R.id.recipe_ingredients_tv);
 
+        mStepsEmptyView = view.findViewById(R.id.steps_empty_view);
+
+        recipeTitleView = view.findViewById(R.id.recipe_detail_name);
+        Log.v(LOG_TAG, "name: " + recipeName);
+        recipeTitleView.setText(recipeName);
+
+        // Get a reference to recipe image view
+        recipeImageView = view.findViewById(R.id.recipe_detail_image_glide);
+
+        if (recipeImageUrl == null) {
+            Glide.with(this)
+                    .load(R.drawable.food)
+                    .into(recipeImageView);
+        } else if (recipeImageUrl.length() == 0) {
+            Glide.with(this)
+                    .load(R.drawable.food)
+                    .into(recipeImageView);
+        } else {
+            Glide.with(this)
+                    .load(recipeImageUrl)
+                    .into(recipeImageView);
+        }
+
+        for (int i = 0; i < ingredientArrayList.size(); i++) {
+            recipeIngredientsView.append(ingredientArrayList.get(i).getIngredient());
+            recipeIngredientsView.append("\n");
+        }
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -125,48 +149,15 @@ public class RecipeFragment extends Fragment {
         Log.v(LOG_TAG, "getParcelableArrayListExtra called.");
         mStepsAdapter.setSteps(stepArrayList);
 
-        //populateUI();
+        Log.v(LOG_TAG, "showStepsDataView called.");
+
+        // This is not working
+        stepArrayList = mFrgAct.getIntent().getParcelableArrayListExtra("steps");
+        Log.v(LOG_TAG, "getParcelableArrayListExtra called.");
+        mStepsAdapter.setSteps(stepArrayList);
+        Log.v(LOG_TAG, "setSteps called.");
 
     }
-
-//    private void populateUI() {
-//
-//        TextView recipeNameView = findViewById(R.id.recipe_detail_name);
-//        Log.v(LOG_TAG, "name: " + recipeName);
-//        recipeNameView.setText(recipeName);
-//
-//        ImageView glideImageView = findViewById(R.id.recipe_detail_image_glide);
-//
-//        if (recipeImageUrl == null) {
-//            Glide.with(this)
-//                    .load(R.drawable.food)
-//                    .into(glideImageView);
-//        } else if (recipeImageUrl.length() == 0) {
-//            Glide.with(this)
-//                    .load(R.drawable.food)
-//                    .into(glideImageView);
-//        } else {
-//            Glide.with(this)
-//                    .load(recipeImageUrl)
-//                    .into(glideImageView);
-//        }
-//
-//        for (int i = 0; i < ingredientArrayList.size(); i++) {
-//            recipeIngredientsView.append(ingredientArrayList.get(i).getIngredient());
-//            recipeIngredientsView.append("\n");
-//        }
-//    }
-
-//    private void loadSteps() {
-//        showStepsDataView();
-//        Log.v(LOG_TAG, "showStepsDataView called.");
-//
-//        // This is not working
-//        stepArrayList = getIntent().getParcelableArrayListExtra("steps");
-//        Log.v(LOG_TAG, "getParcelableArrayListExtra called.");
-//        mStepsAdapter.setSteps(stepArrayList);
-//        Log.v(LOG_TAG, "setSteps called.");
-//    }
 
     private void showStepsDataView() {
         mStepsEmptyView.setVisibility(View.INVISIBLE);
@@ -196,26 +187,6 @@ public class RecipeFragment extends Fragment {
         ArrayList ingredientListSavedState = ingredientArrayList;
         outState.putParcelableArrayList(INGREDIENT_STATE_KEY, ingredientListSavedState);
     }
-
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        recipeImageUrl = savedInstanceState.getString(RECIPE_IMAGE_URL);
-//        recipeImageView.setImageResource(R.drawable.food);
-//
-//        ArrayList stepListSavedState = savedInstanceState.getParcelableArrayList(STEP_LIST_STATE_KEY);
-//        mStepsAdapter.setSteps(stepListSavedState);
-//        savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_STEP_RECYCLER_LAYOUT);
-//        mStepsRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
-//        loadSteps();
-//
-//        ArrayList ingredientListSavedState = savedInstanceState.getParcelableArrayList(INGREDIENT_STATE_KEY);
-//        TextView recipeIngredientsView = findViewById(R.id.recipe_ingredients_tv);
-//        //  ingredientArrayList = getIntent().getParcelableArrayListExtra("ingredients");
-//
-//        for (int i = 0; i < ingredientListSavedState.size(); i++) {
-//            recipeIngredientsView.append(ingredientArrayList.get(i).getIngredient());
-//            recipeIngredientsView.append("\n");
-//        }
-//    }
 }
+
 
