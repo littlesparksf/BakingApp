@@ -106,10 +106,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             Recipe recipe = mRecipeList.get(recipePosition);
 
             Bundle b = new Bundle();
-//            b.putString("name", recipe.getName());
-//            b.putParcelableArrayList("ingredients", recipe.getIngredients());
-//            b.putParcelableArrayList("steps", recipe.getSteps());
-//            b.putString("image", recipe.getImage());
+            b.putString("name", recipe.getName());
+            b.putParcelableArrayList("ingredients", recipe.getIngredients());
+            b.putParcelableArrayList("steps", recipe.getSteps());
+            b.putString("image", recipe.getImage());
 
             b.putParcelable("recipe", recipe);
 
