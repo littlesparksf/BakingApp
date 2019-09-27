@@ -86,14 +86,19 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
             int stepPosition = getAdapterPosition();
             Step step = mStepList.get(stepPosition);
 
-// Here you would go to either step detail or video I think
-//            String url = step.getReviewUrl();
-//            Intent reviewUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-//            mContext.startActivity(reviewUrlIntent);
-
             Bundle b = new Bundle();
+            b.putParcelable("step", step); // maybe this is redundant if I have mStepList already
             b.putInt("step_position", stepPosition);
             b.putParcelableArrayList("steps", mStepList);
+
+            // Intent opens StepDetailActivity
+            final Intent intent = new Intent(mContext, StepDetailActivity.class);
+            intent.putExtras(b);
+
+            mContext.startActivity(intent);
+        }
+    }
+}
 
 //            Bundle b = new Bundle();
 //            b.putInt("step_id", step.getId());
@@ -102,11 +107,3 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 //            b.putString("step_thumbnail_url", step.getThumbnailUrl());
 //            b.putInt("step_position", stepPosition);
 //            b.putString("step_video_url", step.getVideoUrl());
-
-            final Intent intent = new Intent(mContext, StepDetailActivity.class);
-            intent.putExtras(b);
-
-            mContext.startActivity(intent);
-        }
-    }
-}

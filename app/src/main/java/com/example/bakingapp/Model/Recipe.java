@@ -27,6 +27,43 @@ public class Recipe implements Parcelable {
     @SerializedName("image")
     private String image;
 
+
+    public Recipe() {
+    }
+
+    public Recipe(int id, String name, ArrayList<Ingredient> ingredients, ArrayList<Step> steps, int servings, String image) {
+        this.id = id;
+        this.name = name;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.servings = servings;
+        this.image = image;
+    }
+
+    protected Recipe(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        ingredients = in.createTypedArrayList(Ingredient.CREATOR);
+        steps = in.createTypedArrayList(Step.CREATOR);
+        servings = in.readInt();
+        image = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeTypedList(ingredients);
+        dest.writeTypedList(steps);
+        dest.writeInt(servings);
+        dest.writeString(image);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
         @Override
         public Recipe createFromParcel(Parcel in) {
@@ -38,20 +75,6 @@ public class Recipe implements Parcelable {
             return new Recipe[size];
         }
     };
-
-    /** No args constructor for use in serialization */
-    public Recipe(){
-    }
-
-    /** Constructor */
-    public Recipe(int id, String name, ArrayList<Ingredient> ingredients, ArrayList<Step> steps, int servings, String image){
-        this.id = id;
-        this.name = name;
-        this.ingredients = ingredients;
-        this.steps = steps;
-        this.servings = servings;
-        this.image = image;
-    }
 
     /** Getters and Setters here */
 
@@ -75,43 +98,43 @@ public class Recipe implements Parcelable {
 
     // Parceling part
 
-    protected Recipe(Parcel in) {
-        this.id = in.readInt();
-        this.name = in.readString();
-        if(in.readByte () == 0x01) {
-            ingredients = new ArrayList<>();
-            in.readList(ingredients, Ingredient.class.getClassLoader());
-        }
-        if(in.readByte() == 0x01) {
-            steps = new ArrayList<>();
-            in.readList(steps, Step.class.getClassLoader());
-        }
-        servings = in.readInt();
-        image = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.name);
-        if (ingredients == null) {
-            dest.writeByte((byte) (0x00));
-        }else{
-            dest.writeByte((byte)(0x00));
-            dest.writeList(ingredients);
-        }
-        if (steps == null) {
-            dest.writeByte((byte) (0x00));
-        }else{
-            dest.writeByte((byte)(0x00));
-            dest.writeList(steps);
-        }
-        dest.writeInt(this.servings);
-        dest.writeString(this.image);
-    }
+//    protected Recipe(Parcel in) {
+//        this.id = in.readInt();
+//        this.name = in.readString();
+//        if(in.readByte () == 0x01) {
+//            ingredients = new ArrayList<>();
+//            in.readList(ingredients, Ingredient.class.getClassLoader());
+//        }
+//        if(in.readByte() == 0x01) {
+//            steps = new ArrayList<>();
+//            in.readList(steps, Step.class.getClassLoader());
+//        }
+//        servings = in.readInt();
+//        image = in.readString();
+//    }
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeInt(this.id);
+//        dest.writeString(this.name);
+//        if (ingredients == null) {
+//            dest.writeByte((byte) (0x00));
+//        }else{
+//            dest.writeByte((byte)(0x00));
+//            dest.writeList(ingredients);
+//        }
+//        if (steps == null) {
+//            dest.writeByte((byte) (0x00));
+//        }else{
+//            dest.writeByte((byte)(0x00));
+//            dest.writeList(steps);
+//        }
+//        dest.writeInt(this.servings);
+//        dest.writeString(this.image);
+//    }
 }

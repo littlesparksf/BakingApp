@@ -1,9 +1,9 @@
 package com.example.bakingapp.Activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,8 +20,10 @@ import com.bumptech.glide.Glide;
 import com.example.bakingapp.Adapters.RecipeAdapter;
 import com.example.bakingapp.Adapters.StepAdapter;
 import com.example.bakingapp.Model.Ingredient;
+import com.example.bakingapp.Model.Recipe;
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
+import com.example.bakingapp.Utils.ConstantsUtil;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,7 @@ public class RecipeFragment extends Fragment {
 
     private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
     private FragmentActivity mFrgAct;
-    private Intent mIntent;
+   // private Intent mIntent;
 
     // Saved instance state variables
     private static final String RECIPE_IMAGE_URL = "recipe_image_url";
@@ -40,10 +42,11 @@ public class RecipeFragment extends Fragment {
     public static final String INGREDIENT_STATE_KEY = "ingredient_list_key";
 
     // Steps recycler view variables
-    ArrayList<Step> stepArrayList;
+    ArrayList<Step> mStepArrayList;
     private RecyclerView mStepsRecyclerView;
     private StepAdapter mStepsAdapter;
     private TextView mStepsEmptyView;
+    private Recipe mRecipe;
 
     private Context mContext;
     Parcelable savedRecyclerLayoutState;
@@ -56,17 +59,24 @@ public class RecipeFragment extends Fragment {
     // Other recipe variables
     String recipeImageUrl;
     ImageView recipeImageView;
-    TextView recipeTitleView;
     String recipeName;
+    TextView recipeTitleView;
 
     public RecipeFragment() {
         // Required empty public constructor
     }
 
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mRecipe = getArguments().getParcelable(ConstantsUtil.RECIPE_SINGLE);
+        ingredientArrayList = mRecipe.getIngredients();
+        mStepArrayList = mRecipe.getSteps();
+        recipeImageUrl = mRecipe.getImage();
+        recipeName = mRecipe.getName();
+
+        Log.v(LOG_TAG, "onCreate called in RecipeFragment." + ingredientArrayList);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -79,7 +89,7 @@ public class RecipeFragment extends Fragment {
         mStepsRecyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
 
         // Create an adapter
-        mStepsAdapter = new StepAdapter(mContext, new ArrayList<Step>());
+        mStepsAdapter = new StepAdapter(getActivity(), new ArrayList<Step>());
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         Log.v(LOG_TAG, "Adapter set on recycler view.");
 
@@ -126,14 +136,16 @@ public class RecipeFragment extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFrgAct = getActivity();
-        mIntent = mFrgAct.getIntent();
-        // Get a reference to image url
-        recipeImageUrl = mFrgAct.getIntent().getStringExtra("image");
 
+//        mFrgAct = getActivity();
+//        mIntent = mFrgAct.getIntent();
+//        // Get a reference to image url
+//        recipeImageUrl = mFrgAct.getIntent().getStringExtra("image");
+//
         /* Once all of our views are setup, we can load the steps data. */
-        ingredientArrayList = mFrgAct.getIntent().getParcelableArrayListExtra("ingredients");
-        recipeName = mFrgAct.getIntent().getStringExtra("name");
+//        ingredientArrayList = mFrgAct.getIntent().getParcelableArrayListExtra("ingredients");
+//        recipeName = mFrgAct.getIntent().getStringExtra("name");
+
         if (savedInstanceState != null) {
             savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_STEP_RECYCLER_LAYOUT);
             if (savedRecyclerLayoutState != null) {
@@ -144,11 +156,12 @@ public class RecipeFragment extends Fragment {
         showStepsDataView();
         Log.v(LOG_TAG, "showStepsDataView called.");
 
-        // Get step list from intent
-        stepArrayList = mFrgAct.getIntent().getParcelableArrayListExtra("steps");
-        Log.v(LOG_TAG, "getParcelableArrayListExtra called.");
-        mStepsAdapter.setSteps(stepArrayList);
+//        // Get step list from intent
+//        mStepArrayList = mFrgAct.getIntent().getParcelableArrayListExtra("steps");
+//        Log.v(LOG_TAG, "getParcelableArrayListExtra called." + mStepArrayList);
 
+        // Give steps list to adapter
+        mStepsAdapter.setSteps(mStepArrayList);
     }
 
     private void showStepsDataView() {
@@ -171,7 +184,7 @@ public class RecipeFragment extends Fragment {
         outState.putString(RECIPE_IMAGE_URL, savedImageUrl);
 
         // Step List saved state
-        ArrayList stepListSavedState = stepArrayList;
+        ArrayList stepListSavedState = mStepArrayList;
         outState.putParcelableArrayList(STEP_LIST_STATE_KEY, stepListSavedState);
         outState.putParcelable(BUNDLE_STEP_RECYCLER_LAYOUT, mStepsRecyclerView.getLayoutManager().onSaveInstanceState());
 
