@@ -42,21 +42,23 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
     @Override
     public void onBindViewHolder(StepViewHolder viewHolder, int position) {
-        Log.v(LOG_TAG, "onBindViewHolder for Steps called.");
         Step stepListItem = mStepList.get(position);
         String stepShortDescription = stepListItem.getShortDescription();
         String stepLongDescription = stepListItem.getDescription();
 
         viewHolder.stepShortDescriptionTextView.setText(stepShortDescription);
         viewHolder.stepLongDescriptionTextView.setText(stepLongDescription);
+        Log.v(LOG_TAG, "onBindViewHolder for Steps called.");
     }
 
     @Override
     public int getItemCount() {
-        return mStepList != null ? mStepList.size() :0;
+        Log.v(LOG_TAG, "getItemCount called in Step Adapter.");
+        return mStepList != null ? mStepList.size() : 0;
     }
 
     public List<Step> getSteps() {
+        Log.v(LOG_TAG, "getSteps called in Step Adapter.");
         return mStepList;
     }
 

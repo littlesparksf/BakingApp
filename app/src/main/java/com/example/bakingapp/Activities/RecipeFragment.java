@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +31,7 @@ import butterknife.ButterKnife;
 public class RecipeFragment extends Fragment {
 
     private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
-    private FragmentActivity mFrgAct;
+    //private FragmentActivity mFrgAct;
    // private Intent mIntent;
 
     // Saved instance state variables
@@ -82,9 +81,11 @@ public class RecipeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.recipe_fragment, container, false);
+
         //  Get a reference to the RecyclerView
         mStepsRecyclerView = root.findViewById(R.id.steps_recycler_view);
         Log.v(LOG_TAG, "Reviews recycler view found.");
+
         // Set layout manager
         mStepsRecyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
 
@@ -105,15 +106,21 @@ public class RecipeFragment extends Fragment {
         // Set up Ingredients TextView
         recipeIngredientsView = view.findViewById(R.id.recipe_ingredients_tv);
 
+        for (int i = 0; i < ingredientArrayList.size(); i++) {
+            recipeIngredientsView.append(ingredientArrayList.get(i).getIngredient());
+            recipeIngredientsView.append("\n");
+        }
+
+        // Set up empty view
         mStepsEmptyView = view.findViewById(R.id.steps_empty_view);
 
+        // Set up title view
         recipeTitleView = view.findViewById(R.id.recipe_detail_name);
         Log.v(LOG_TAG, "name: " + recipeName);
         recipeTitleView.setText(recipeName);
 
-        // Get a reference to recipe image view
+        // Set up Recipe Image View
         recipeImageView = view.findViewById(R.id.recipe_detail_image_glide);
-
         if (recipeImageUrl == null) {
             Glide.with(this)
                     .load(R.drawable.food)
@@ -127,24 +134,10 @@ public class RecipeFragment extends Fragment {
                     .load(recipeImageUrl)
                     .into(recipeImageView);
         }
-
-        for (int i = 0; i < ingredientArrayList.size(); i++) {
-            recipeIngredientsView.append(ingredientArrayList.get(i).getIngredient());
-            recipeIngredientsView.append("\n");
-        }
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-//        mFrgAct = getActivity();
-//        mIntent = mFrgAct.getIntent();
-//        // Get a reference to image url
-//        recipeImageUrl = mFrgAct.getIntent().getStringExtra("image");
-//
-        /* Once all of our views are setup, we can load the steps data. */
-//        ingredientArrayList = mFrgAct.getIntent().getParcelableArrayListExtra("ingredients");
-//        recipeName = mFrgAct.getIntent().getStringExtra("name");
 
         if (savedInstanceState != null) {
             savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_STEP_RECYCLER_LAYOUT);
@@ -153,12 +146,10 @@ public class RecipeFragment extends Fragment {
             }
         }
 
+        // Load steps data
         showStepsDataView();
         Log.v(LOG_TAG, "showStepsDataView called.");
 
-//        // Get step list from intent
-//        mStepArrayList = mFrgAct.getIntent().getParcelableArrayListExtra("steps");
-//        Log.v(LOG_TAG, "getParcelableArrayListExtra called." + mStepArrayList);
 
         // Give steps list to adapter
         mStepsAdapter.setSteps(mStepArrayList);

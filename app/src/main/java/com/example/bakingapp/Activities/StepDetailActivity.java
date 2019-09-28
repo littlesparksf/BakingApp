@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,10 +25,17 @@ import butterknife.ButterKnife;
 
 public class StepDetailActivity extends AppCompatActivity implements View.OnClickListener, StepNumberAdapter.OnStepClick {
 
+    // Global variables
+    private Step mStep;
+    private int mStepPosition;
+    private ArrayList<Step> mStepArrayList;
+    boolean isFromWidget;
+
     // Keys for saving state
     public static final String STEP_LIST_STATE = "step_list_state";
     public static final String STEP_NUMBER_STATE = "step_number";
-    public static final String STEP_LIST_JSON_STATE = "step_list_json_state";
+   // public static final String STEP_LIST_JSON_STATE = "step_list_json_state";
+    private static final String LOG_TAG = StepDetailActivity.class.getSimpleName();
 
     // For two-pane tablet layout
     private boolean isTablet;
@@ -52,11 +58,11 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     @BindView(R.id.steps_recycler_view)
     RecyclerView mRecyclerViewSteps;
 
-    ArrayList<Step> mStepArrayList = new ArrayList<>();
-    String mJsonResult;
-    boolean isFromWidget;
-    StepNumberAdapter mStepNumberAdapter;
-    LinearLayoutManager mLinearLayoutManager;
+//    ArrayList<Step> mStepArrayList = new ArrayList<>();
+//    String mJsonResult;
+//    boolean isFromWidget;
+//    StepNumberAdapter mStepNumberAdapter;
+//    LinearLayoutManager mLinearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,23 +80,30 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         }
 
         Intent intent = getIntent();
-        if (intent != null) {
-            if (intent.hasExtra(ConstantsUtil.STEP_INTENT_EXTRA)) {
-                mStepArrayList = getIntent().getParcelableArrayListExtra(ConstantsUtil.STEP_INTENT_EXTRA);
-            }
-            if (intent.hasExtra(ConstantsUtil.JSON_RESULT_EXTRA)) {
-                mJsonResult = getIntent().getStringExtra(ConstantsUtil.JSON_RESULT_EXTRA);
-            }
-            if (intent.getStringExtra(ConstantsUtil.WIDGET_EXTRA) != null) {
-                isFromWidget = true;
-            } else {
-                isFromWidget = false;
-            }
-        }
-        // If no saved state, initiate fragment
-        //if (savedInstanceState != null) {
-            playVideo(mStepArrayList.get(mVideoNumber));
-        //}
+        mStepArrayList = intent.getParcelableArrayListExtra("steps");
+        mStep = intent.getParcelableExtra("step");
+        // This is not working - mStepPosition = intent.getIntExtra("step_position");
+        playVideo(mStep);
+
+
+//        if (intent != null) {
+//            if (intent.hasExtra(ConstantsUtil.STEP_INTENT_EXTRA)) {
+//                mStepArrayList = getIntent().getParcelableArrayListExtra(ConstantsUtil.STEP_INTENT_EXTRA);
+//            }
+//            if (intent.hasExtra(ConstantsUtil.JSON_RESULT_EXTRA)) {
+//                mJsonResult = getIntent().getStringExtra(ConstantsUtil.JSON_RESULT_EXTRA);
+//            }
+//            if (intent.getStringExtra(ConstantsUtil.WIDGET_EXTRA) != null) {
+//                isFromWidget = true;
+//            } else {
+//                isFromWidget = false;
+//            }
+//        } else
+//        // If no saved state, initiate fragment
+//        //if (savedInstanceState != null) {
+//        Log.v(LOG_TAG, "Getting video number");
+//        playVideo(mStepArrayList.get(mVideoNumber));
+//        //}
 
         ButterKnife.bind(this);
 
@@ -140,7 +153,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(STEP_LIST_STATE, mStepArrayList);
-        outState.putString(STEP_LIST_JSON_STATE, mJsonResult);
+        // outState.putString(STEP_LIST_JSON_STATE, mJsonResult);
         outState.putInt(STEP_NUMBER_STATE, mVideoNumber);
     }
 
@@ -193,7 +206,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
             mStepArrayList = savedInstanceState.getParcelableArrayList(STEP_LIST_STATE);
-            mJsonResult = savedInstanceState.getString(STEP_LIST_JSON_STATE);
+            // mJsonResult = savedInstanceState.getString(STEP_LIST_JSON_STATE);
             mVideoNumber = savedInstanceState.getInt(STEP_NUMBER_STATE);
         }
     }
