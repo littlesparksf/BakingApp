@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.bakingapp.Adapters.StepNumberAdapter;
+import com.example.bakingapp.Model.Recipe;
 import com.example.bakingapp.Model.Step;
 import com.example.bakingapp.R;
 import com.example.bakingapp.Utils.ConstantsUtil;
@@ -21,12 +22,12 @@ import com.example.bakingapp.Utils.ConstantsUtil;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class StepDetailActivity extends AppCompatActivity implements View.OnClickListener, StepNumberAdapter.OnStepClick {
 
     // Global variables
     private Step mStep;
+    private Recipe mRecipe;
     private int mStepPosition;
     private ArrayList<Step> mStepArrayList;
     boolean isFromWidget;
@@ -37,8 +38,6 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
    // public static final String STEP_LIST_JSON_STATE = "step_list_json_state";
     private static final String LOG_TAG = StepDetailActivity.class.getSimpleName();
 
-    // For two-pane tablet layout
-    private boolean isTablet;
     int mVideoNumber = 0;
 
     @BindView(R.id.fl_player_container)
@@ -72,13 +71,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         // Up navigation
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Check if device is a tablet
-        if ((findViewById(R.id.activity_step_tablet) != null)) {
-            isTablet = true;
-        } else {
-            isTablet = false;
-        }
-
+        // Get step list and current step from intent
         Intent intent = getIntent();
         mStepArrayList = intent.getParcelableArrayListExtra("steps");
         mStep = intent.getParcelableExtra("step");
@@ -105,9 +98,9 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
 //        playVideo(mStepArrayList.get(mVideoNumber));
 //        //}
 
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
 
-        handleUiForDevice();
+        //   handleUiForDevice();
     }
 
     public void playVideo(Step step) {
@@ -132,19 +125,6 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.fl_player_container, videoPlayerFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    public void loadRecipeDetailFragment(Step step) {
-        RecipeFragment recipeDetailFragment = new RecipeFragment();
-        Bundle stepsBundle = new Bundle();
-        stepsBundle.putParcelable(ConstantsUtil.STEP_SINGLE, step);
-        recipeDetailFragment.setArguments(stepsBundle);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.recipe_fragment_container, recipeDetailFragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -193,13 +173,14 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         playVideoReplace(mStepArrayList.get(position));
     }
 
-    public void handleUiForDevice() {
-        if (!isTablet) {
-            // Set button listeners
-            mButtonNextStep.setOnClickListener(this);
-            mButtonPreviousStep.setOnClickListener(this);
-        }
-    }
+//    putting tablet check in RecipeDetailActivity and taking it out of here
+//    public void handleUiForDevice() {
+//        if (!isTablet) {
+//            // Set button listeners
+//            mButtonNextStep.setOnClickListener(this);
+//            mButtonPreviousStep.setOnClickListener(this);
+//        }
+//    }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
