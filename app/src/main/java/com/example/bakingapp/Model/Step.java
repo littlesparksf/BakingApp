@@ -16,10 +16,10 @@ public class Step implements Parcelable {
     @SerializedName("description")
     private String description;
 
-    @SerializedName("videoUrl")
+    @SerializedName("videoURL")
     private String videoUrl;
 
-    @SerializedName("thumbnailUrl")
+    @SerializedName("thumbnailURL")
     private String thumbnailUrl;
 
     /** No args constructor for use in serialization */

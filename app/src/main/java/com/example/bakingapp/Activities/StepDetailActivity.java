@@ -2,11 +2,9 @@ package com.example.bakingapp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +20,7 @@ import com.example.bakingapp.Utils.ConstantsUtil;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class StepDetailActivity extends AppCompatActivity implements View.OnClickListener, StepNumberAdapter.OnStepClick {
 
@@ -43,19 +42,14 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     @BindView(R.id.fl_player_container)
     FrameLayout mFragmentContainer;
 
-    @BindView(R.id.recipe_fragment_container)
-    FrameLayout mRecipeFragmentContainer;
+//    @BindView(R.id.recipe_fragment_container)
+//    FrameLayout mRecipeFragmentContainer;
 
     @BindView(R.id.btn_next_step)
     Button mButtonNextStep;
 
     @BindView(R.id.btn_previous_step)
     Button mButtonPreviousStep;
-
-    @Nullable
-    // Check this bc there is no steps recycler view on this page
-    @BindView(R.id.steps_recycler_view)
-    RecyclerView mRecyclerViewSteps;
 
 //    ArrayList<Step> mStepArrayList = new ArrayList<>();
 //    String mJsonResult;
@@ -98,7 +92,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
 //        playVideo(mStepArrayList.get(mVideoNumber));
 //        //}
 
-//        ButterKnife.bind(this);
+        ButterKnife.bind(this);
 
         //   handleUiForDevice();
     }
