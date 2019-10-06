@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,16 +37,13 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     // Keys for saving state
     public static final String STEP_LIST_STATE = "step_list_state";
     public static final String STEP_NUMBER_STATE = "step_number";
-   // public static final String STEP_LIST_JSON_STATE = "step_list_json_state";
+    public static final String STEP_LIST_JSON_STATE = "step_list_json_state";
     private static final String LOG_TAG = StepDetailActivity.class.getSimpleName();
 
     int mVideoNumber = 0;
 
     @BindView(R.id.fl_player_container)
     FrameLayout mFragmentContainer;
-
-//    @BindView(R.id.recipe_fragment_container)
-//    FrameLayout mRecipeFragmentContainer;
 
     @BindView(R.id.btn_next_step)
     Button mButtonNextStep;
@@ -59,7 +57,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     RecyclerView mRecyclerViewSteps;
 
 //    ArrayList<Step> mStepArrayList = new ArrayList<>();
-//    String mJsonResult;
+    String mJsonResult;
 //    boolean isFromWidget;
 //    StepNumberAdapter mStepNumberAdapter;
 //    LinearLayoutManager mLinearLayoutManager;
@@ -77,31 +75,32 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         mStepArrayList = intent.getParcelableArrayListExtra("steps");
         mStep = intent.getParcelableExtra("step");
         // This is not working - mStepPosition = intent.getIntExtra("step_position");
+        // Adding mRecipe to playVideo in order to send steps to VideoFragment, was trying to use mStepArrayList but wasn't working in playVideo()
         playVideo(mStep);
 
 
-//        if (intent != null) {
-//            if (intent.hasExtra(ConstantsUtil.STEP_INTENT_EXTRA)) {
-//                mStepArrayList = getIntent().getParcelableArrayListExtra(ConstantsUtil.STEP_INTENT_EXTRA);
-//            }
-//            if (intent.hasExtra(ConstantsUtil.JSON_RESULT_EXTRA)) {
-//                mJsonResult = getIntent().getStringExtra(ConstantsUtil.JSON_RESULT_EXTRA);
-//            }
-//            if (intent.getStringExtra(ConstantsUtil.WIDGET_EXTRA) != null) {
-//                isFromWidget = true;
-//            } else {
-//                isFromWidget = false;
-//            }
-//        } else
-//        // If no saved state, initiate fragment
-//        //if (savedInstanceState != null) {
-//        Log.v(LOG_TAG, "Getting video number");
-//        playVideo(mStepArrayList.get(mVideoNumber));
-//        //}
+        if (intent != null) {
+            if (intent.hasExtra(ConstantsUtil.STEP_INTENT_EXTRA)) {
+                mStepArrayList = getIntent().getParcelableArrayListExtra(ConstantsUtil.STEP_INTENT_EXTRA);
+            }
+            if (intent.hasExtra(ConstantsUtil.JSON_RESULT_EXTRA)) {
+                mJsonResult = getIntent().getStringExtra(ConstantsUtil.JSON_RESULT_EXTRA);
+            }
+            if (intent.getStringExtra(ConstantsUtil.WIDGET_EXTRA) != null) {
+                isFromWidget = true;
+            } else {
+                isFromWidget = false;
+            }
+        } else
+        // If no saved state, initiate fragment
+        //if (savedInstanceState != null) {
+        Log.v(LOG_TAG, "Getting video number");
+        playVideo(mStepArrayList.get(mVideoNumber));
+        //}
 
         ButterKnife.bind(this);
 
-        //   handleUiForDevice();
+           handleUiForDevice();
     }
 
     public void playVideo(Step step) {
@@ -130,11 +129,27 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
                 .commit();
     }
 
+//    // made a different playVideo() method that passes recipe to VideoFragment
+//    // so I can get index of step and go to next/previous steps
+//    public void playVideo(Step step, Recipe recipe) {
+//        VideoFragment videoPlayerFragment = new VideoFragment();
+//        Bundle stepsBundle = new Bundle();
+//        stepsBundle.putParcelable(ConstantsUtil.STEP_SINGLE, step);
+//        // stepsBundle.putParcelable(ConstantsUtil.RECIPE_SINGLE, recipe);
+//        videoPlayerFragment.setArguments(stepsBundle);
+//
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.fl_player_container, videoPlayerFragment)
+//                .addToBackStack(null)
+//                .commit();
+//    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(STEP_LIST_STATE, mStepArrayList);
-        // outState.putString(STEP_LIST_JSON_STATE, mJsonResult);
+        outState.putString(STEP_LIST_JSON_STATE, mJsonResult);
         outState.putInt(STEP_NUMBER_STATE, mVideoNumber);
     }
 
@@ -168,6 +183,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    // I think this belongs in Recipe Detail Activity tablet logic
     @Override
     public void onStepClick(int position) {
         mVideoNumber = position;
@@ -175,20 +191,20 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
 //    putting tablet check in RecipeDetailActivity and taking it out of here
-//    public void handleUiForDevice() {
-//        if (!isTablet) {
-//            // Set button listeners
-//            mButtonNextStep.setOnClickListener(this);
-//            mButtonPreviousStep.setOnClickListener(this);
-//        }
-//    }
+    public void handleUiForDevice() {
+        //if (!isTablet) {
+            // Set button listeners
+            mButtonNextStep.setOnClickListener(this);
+            mButtonPreviousStep.setOnClickListener(this);
+        //}
+    }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
             mStepArrayList = savedInstanceState.getParcelableArrayList(STEP_LIST_STATE);
-            // mJsonResult = savedInstanceState.getString(STEP_LIST_JSON_STATE);
+            mJsonResult = savedInstanceState.getString(STEP_LIST_JSON_STATE);
             mVideoNumber = savedInstanceState.getInt(STEP_NUMBER_STATE);
         }
     }

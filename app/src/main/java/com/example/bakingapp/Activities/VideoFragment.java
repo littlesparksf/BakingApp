@@ -29,6 +29,8 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -57,6 +59,7 @@ public class VideoFragment extends Fragment {
     SimpleExoPlayer mSimpleExoPlayer;
 
     Step mStep;
+    ArrayList<Step> mStepArrayList;
     Uri mVideoUri;
     String mVideoThumbnail;
     Bitmap mVideoThumbnailImage;
@@ -108,6 +111,8 @@ public class VideoFragment extends Fragment {
                 mPlayerView.setVisibility(View.VISIBLE);
 
                 mStep = getArguments().getParcelable(ConstantsUtil.STEP_SINGLE);
+                // Just added this, trying to move click handling into fragment
+                mStepArrayList = getArguments().getParcelableArrayList(ConstantsUtil.RECIPE_SINGLE);
 
                 if (mStep.getVideoUrl().equals("")) {
                     // Check thumbnail
@@ -128,7 +133,6 @@ public class VideoFragment extends Fragment {
                 }
             }
         }
-
         return root;
     }
 
@@ -225,6 +229,7 @@ public class VideoFragment extends Fragment {
 //        super.onDestroyView();
 //        releasePlayer();
 //    }
+
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
