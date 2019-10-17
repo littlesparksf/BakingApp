@@ -7,11 +7,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.bakingapp.Adapters.StepNumberAdapter;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StepDetailActivity extends AppCompatActivity implements View.OnClickListener, StepNumberAdapter.OnStepClick {
+public class StepDetailActivity extends AppCompatActivity implements View.OnClickListener, StepNumberAdapter.OnStepClick, VideoFragment.VideoFragmentSaveInstanceListener {
 
     // Global variables
     private Step mStep;
@@ -33,8 +32,10 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     private int mStepPosition;
     private ArrayList<Step> mStepArrayList;
     boolean isFromWidget;
+    private long mCurrentPosition;
 
     // Keys for saving state
+    private static final String VIDEO_PLAY_POSITION = "video_play_position";
     public static final String STEP_LIST_STATE = "step_list_state";
     public static final String STEP_NUMBER_STATE = "step_number";
     public static final String STEP_LIST_JSON_STATE = "step_list_json_state";
@@ -46,10 +47,10 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     FrameLayout mFragmentContainer;
 
     @BindView(R.id.btn_next_step)
-    Button mButtonNextStep;
+    ImageButton mButtonNextStep;
 
     @BindView(R.id.btn_previous_step)
-    Button mButtonPreviousStep;
+    ImageButton mButtonPreviousStep;
 
     @Nullable
     // Check this bc there is no steps recycler view on this page
@@ -76,7 +77,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         mStep = intent.getParcelableExtra("step");
         // This is not working - mStepPosition = intent.getIntExtra("step_position");
         // Adding mRecipe to playVideo in order to send steps to VideoFragment, was trying to use mStepArrayList but wasn't working in playVideo()
-        playVideo(mStep);
+        //playVideo(mStep);
 
 
         if (intent != null) {
@@ -94,13 +95,12 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         } else
         // If no saved state, initiate fragment
         //if (savedInstanceState != null) {
-        Log.v(LOG_TAG, "Getting video number");
         playVideo(mStepArrayList.get(mVideoNumber));
         //}
 
         ButterKnife.bind(this);
 
-           handleUiForDevice();
+        handleUiForDevice();
     }
 
     public void playVideo(Step step) {
@@ -108,6 +108,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         Bundle stepsBundle = new Bundle();
         stepsBundle.putParcelable(ConstantsUtil.STEP_SINGLE, step);
         videoPlayerFragment.setArguments(stepsBundle);
+        videoPlayerFragment.setExoPlayerPosition(mCurrentPosition);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -145,13 +146,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
 //                .commit();
 //    }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(STEP_LIST_STATE, mStepArrayList);
-        outState.putString(STEP_LIST_JSON_STATE, mJsonResult);
-        outState.putInt(STEP_NUMBER_STATE, mVideoNumber);
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -200,13 +195,29 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(STEP_LIST_STATE, mStepArrayList);
+        outState.putString(STEP_LIST_JSON_STATE, mJsonResult);
+        outState.putInt(STEP_NUMBER_STATE, mVideoNumber);
+        //Find current position in exoplayer - getter and setter methods
+        outState.putLong(VIDEO_PLAY_POSITION, mCurrentPosition);
+    }
+
+    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
             mStepArrayList = savedInstanceState.getParcelableArrayList(STEP_LIST_STATE);
             mJsonResult = savedInstanceState.getString(STEP_LIST_JSON_STATE);
             mVideoNumber = savedInstanceState.getInt(STEP_NUMBER_STATE);
+            mCurrentPosition = savedInstanceState.getLong(VIDEO_PLAY_POSITION);
         }
+    }
+
+    @Override
+    public void onVideoFragmentSaveInstance(long playerPosition) {
+        mCurrentPosition = playerPosition;
     }
 }
 

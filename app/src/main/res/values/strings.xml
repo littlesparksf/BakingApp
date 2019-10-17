@@ -25,7 +25,7 @@
 
     <!-- Strings for dialog box -->
 
-    <string name="no_internet_connection">No internet connection.</string>
+    <string name="no_internet_connection">Sorry! No internet connection.</string>
 
     <string name="close_button_x">Close button x.</string>
 

@@ -1,5 +1,6 @@
 package com.example.bakingapp.Activities;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
@@ -43,6 +44,12 @@ public class VideoFragment extends Fragment {
     public static final String STEP_SINGLE = "step_single";
 
     int mVideoNumber = 0;
+
+    private VideoFragmentSaveInstanceListener mListener;
+
+    public interface VideoFragmentSaveInstanceListener {
+        void onVideoFragmentSaveInstance (long playerPosition);
+    }
 
     @BindView(R.id.tv_step_title)
     TextView mStepTitle;
@@ -112,7 +119,7 @@ public class VideoFragment extends Fragment {
 
                 mStep = getArguments().getParcelable(ConstantsUtil.STEP_SINGLE);
                 // Just added this, trying to move click handling into fragment
-                mStepArrayList = getArguments().getParcelableArrayList(ConstantsUtil.RECIPE_SINGLE);
+                // mStepArrayList = getArguments().getParcelableArrayList(ConstantsUtil.RECIPE_SINGLE);
 
                 if (mStep.getVideoUrl().equals("")) {
                     // Check thumbnail
@@ -134,6 +141,31 @@ public class VideoFragment extends Fragment {
             }
         }
         return root;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (VideoFragmentSaveInstanceListener) context;
+        } catch (ClassCastException aE) {
+            throw new ClassCastException(context.toString()
+                    + " must implement VideoFragmentSaveInstanceListener");
+        }
+
+    }
+
+    public long getExoplayerCurrentPosition(){
+        if (mSimpleExoPlayer != null) {
+        return mSimpleExoPlayer.getCurrentPosition();
+        }
+        return 0;
+    }
+
+    public void setExoPlayerPosition(long position){
+        if(mSimpleExoPlayer != null) {
+            mSimpleExoPlayer.seekTo(position);
+        }
     }
 
     public void initializeVideoPlayer(Uri videoUri) {
@@ -198,6 +230,7 @@ public class VideoFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if (mSimpleExoPlayer != null) {
+            mListener.onVideoFragmentSaveInstance(mSimpleExoPlayer.getCurrentPosition());
             updateStartPosition();
             if (Util.SDK_INT <= 23) {
                 releasePlayer();
