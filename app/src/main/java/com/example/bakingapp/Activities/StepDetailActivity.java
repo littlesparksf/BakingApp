@@ -77,25 +77,24 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         mStep = intent.getParcelableExtra("step");
         // This is not working - mStepPosition = intent.getIntExtra("step_position");
         // Adding mRecipe to playVideo in order to send steps to VideoFragment, was trying to use mStepArrayList but wasn't working in playVideo()
-        //playVideo(mStep);
-
+        playVideo(mStep);
 
         if (intent != null) {
-            if (intent.hasExtra(ConstantsUtil.STEP_INTENT_EXTRA)) {
-                mStepArrayList = getIntent().getParcelableArrayListExtra(ConstantsUtil.STEP_INTENT_EXTRA);
-            }
-            if (intent.hasExtra(ConstantsUtil.JSON_RESULT_EXTRA)) {
-                mJsonResult = getIntent().getStringExtra(ConstantsUtil.JSON_RESULT_EXTRA);
-            }
+//            if (intent.hasExtra(ConstantsUtil.STEP_INTENT_EXTRA)) {
+//                mStepArrayList = getIntent().getParcelableArrayListExtra(ConstantsUtil.STEP_INTENT_EXTRA);
+//            }
+//            if (intent.hasExtra(ConstantsUtil.JSON_RESULT_EXTRA)) {
+//                mJsonResult = getIntent().getStringExtra(ConstantsUtil.JSON_RESULT_EXTRA);
+//            }
             if (intent.getStringExtra(ConstantsUtil.WIDGET_EXTRA) != null) {
                 isFromWidget = true;
             } else {
                 isFromWidget = false;
             }
-        } else
-        // If no saved state, initiate fragment
-        //if (savedInstanceState != null) {
-        playVideo(mStepArrayList.get(mVideoNumber));
+        }
+        //else
+        // If no saved state, initiate fragment//if (savedInstanceState != null) {
+         //playVideo(mStepArrayList.get(mVideoNumber));
         //}
 
         ButterKnife.bind(this);
