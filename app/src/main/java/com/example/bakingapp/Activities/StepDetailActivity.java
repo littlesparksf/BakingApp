@@ -56,12 +56,8 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
     // Check this bc there is no steps recycler view on this page
     @BindView(R.id.steps_recycler_view)
     RecyclerView mRecyclerViewSteps;
-
-//    ArrayList<Step> mStepArrayList = new ArrayList<>();
     String mJsonResult;
-//    boolean isFromWidget;
-//    StepNumberAdapter mStepNumberAdapter;
-//    LinearLayoutManager mLinearLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +71,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         Intent intent = getIntent();
         mStepArrayList = intent.getParcelableArrayListExtra("steps");
         mStep = intent.getParcelableExtra("step");
-        // This is not working - mStepPosition = intent.getIntExtra("step_position");
-        // Adding mRecipe to playVideo in order to send steps to VideoFragment, was trying to use mStepArrayList but wasn't working in playVideo()
+
         playVideo(mStep);
 
         if (intent != null) {
@@ -92,10 +87,6 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
                 isFromWidget = false;
             }
         }
-        //else
-        // If no saved state, initiate fragment//if (savedInstanceState != null) {
-         //playVideo(mStepArrayList.get(mVideoNumber));
-        //}
 
         ButterKnife.bind(this);
 
@@ -116,6 +107,7 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
                 .commit();
     }
 
+    // Not sure I need this, maybe I can just use playVideo method again
     public void playVideoReplace(Step step) {
         VideoFragment videoPlayerFragment = new VideoFragment();
         Bundle stepsBundle = new Bundle();
@@ -128,24 +120,6 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
                 .addToBackStack(null)
                 .commit();
     }
-
-//    // made a different playVideo() method that passes recipe to VideoFragment
-//    // so I can get index of step and go to next/previous steps
-//    public void playVideo(Step step, Recipe recipe) {
-//        VideoFragment videoPlayerFragment = new VideoFragment();
-//        Bundle stepsBundle = new Bundle();
-//        stepsBundle.putParcelable(ConstantsUtil.STEP_SINGLE, step);
-//        // stepsBundle.putParcelable(ConstantsUtil.RECIPE_SINGLE, recipe);
-//        videoPlayerFragment.setArguments(stepsBundle);
-//
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.fl_player_container, videoPlayerFragment)
-//                .addToBackStack(null)
-//                .commit();
-//    }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -219,16 +193,6 @@ public class StepDetailActivity extends AppCompatActivity implements View.OnClic
         mCurrentPosition = playerPosition;
     }
 }
-
-//    mStepNumber = getIntent().getIntExtra("step_position", 0);
-//    mStepId = getIntent().getIntExtra("step_id", 0);
-//    mVideoShortDescription = getIntent().getStringExtra("short_desc");
-//    mVideoUri = getIntent().getStringExtra("step_video_url");
-//    mVideoDescription = getIntent().getStringExtra("long_desc");
-//    mVideoThumbnail = getIntent().getStringExtra("step_thumbnail_url");
-//
-//    mStep = new Step(mStepId, mVideoShortDescription, mVideoDescription, mVideoUri, mVideoShortDescription);
-
 
 
 

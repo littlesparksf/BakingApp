@@ -101,11 +101,3 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         }
     }
 }
-
-//            Bundle b = new Bundle();
-//            b.putInt("step_id", step.getId());
-//            b.putString("short_desc", step.getShortDescription());
-//            b.putString("long_desc", step.getDescription());
-//            b.putString("step_thumbnail_url", step.getThumbnailUrl());
-//            b.putInt("step_position", stepPosition);
-//            b.putString("step_video_url", step.getVideoUrl());

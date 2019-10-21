@@ -13,6 +13,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/recipe_list_header"
         android:textAppearance="?android:textAppearanceMedium"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"

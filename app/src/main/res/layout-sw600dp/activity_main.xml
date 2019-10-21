@@ -8,8 +8,21 @@
     tools:context="com.example.bakingapp.Activities.MainActivity"
     android:id="@+id/main_activity_tablet_layout">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/recipe_list_header"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/recipes_recycler_view"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recipes"
+        android:id="@+id/recipes_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
